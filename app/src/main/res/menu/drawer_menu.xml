@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tolls"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_challenge"
+            android:icon="@drawable/ic_challenge"
+            android:title="Desafios" />
+
+        <item
+            android:id="@+id/nav_classification"
+            android:icon="@drawable/ic_classification"
+            android:title="Classificação" />
+
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="Mapa da ESTG" />
+
+
+    </group>
+
+    <item android:title="Outras">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_profile"
+                android:title="Minha conta" />
+            <item
+                android:id="@+id/nav_support"
+                android:icon="@drawable/ic_support"
+                android:title="Suporte" />
+        </menu>
+    </item>
+    >
+
+
+</menu>

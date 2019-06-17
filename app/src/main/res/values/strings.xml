@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">KnowESTGbyGame</string>
+    <string name="navigation_drawer_open">Mostrar barra de navegação</string>
+    <string name="navigation_drawer_close">Esconder barra de navegação</string>
+
+</resources>
