@@ -3,9 +3,10 @@ package pt.ipleiria.knowestgbygame.Models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Challenge implements Serializable {
+public class Game implements Serializable {
 
     @SerializedName("Title")
     private  String title;
@@ -16,22 +17,22 @@ public class Challenge implements Serializable {
     @SerializedName("Thumbnail")
     private int thumbnail;
 
-    @SerializedName("time")
-    private long time;
+    @SerializedName("score")
+    private int score;
 
-    @SerializedName("Sugestion")
-    private List<Sugestion> sugestions;
+    @SerializedName("Challenges")
+    private List<Challenge> challenges;
 
-    @SerializedName("answerType")
-    private AnswerType answerType;
+    @SerializedName("Created_by")
+    private String created_by;
 
-    public Challenge(String title, String description, int thumbnail, long time, List<Sugestion> sugestions, AnswerType answerType) {
+    public Game(String title, String description, int thumbnail, List<Challenge> challenges, String created_by, int score) {
         this.title = title;
         this.description = description;
         this.thumbnail = thumbnail;
-        this.time = time;
-        this.sugestions = sugestions;
-        this.answerType = answerType;
+        this.score = score;
+        this.challenges = challenges;
+        this.created_by = created_by;
     }
 
     public String getTitle() {
@@ -58,27 +59,27 @@ public class Challenge implements Serializable {
         this.thumbnail = thumbnail;
     }
 
-    public long getTime() {
-        return time;
+    public int getScore() {
+        return score;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setScore(int score) {
+        this.score = score;
     }
 
-    public List<Sugestion> getSugestions() {
-        return sugestions;
+    public List<Challenge> getChallenges() {
+        return challenges;
     }
 
-    public void setSugestions(List<Sugestion> sugestions) {
-        this.sugestions = sugestions;
+    public void setChallenges(List<Challenge> challenges) {
+        this.challenges = challenges;
     }
 
-    public AnswerType getAnswerType() {
-        return answerType;
+    public String getCreated_by() {
+        return created_by;
     }
 
-    public void setAnswerType(AnswerType answerType) {
-        this.answerType = answerType;
+    public void setCreated_by(String created_by) {
+        this.created_by = created_by;
     }
 }

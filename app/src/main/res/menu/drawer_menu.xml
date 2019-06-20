@@ -5,21 +5,24 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/dashboard" />
+
+        <item
+            android:id="@+id/nav_game"
+            android:icon="@drawable/ic_game"
+            android:title="@string/game" />
+
+        <item
             android:id="@+id/nav_challenge"
             android:icon="@drawable/ic_challenge"
-            android:title="Desafios" />
+            android:title="@string/challenges" />
 
         <item
             android:id="@+id/nav_classification"
             android:icon="@drawable/ic_classification"
-            android:title="Classificação" />
-
-        <item
-            android:id="@+id/nav_map"
-            android:icon="@drawable/ic_map"
-            android:title="Mapa da ESTG" />
-
-
+            android:title="@string/classification" />
     </group>
 
     <item android:title="Outras">
@@ -27,11 +30,17 @@
             <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_profile"
-                android:title="Minha conta" />
+                android:title="@string/my_account" />
+
+            <item
+                android:id="@+id/nav_map"
+                android:icon="@drawable/ic_map"
+                android:title="@string/estg_map" />
+
             <item
                 android:id="@+id/nav_support"
                 android:icon="@drawable/ic_support"
-                android:title="Suporte" />
+                android:title="@string/support" />
         </menu>
     </item>
     >

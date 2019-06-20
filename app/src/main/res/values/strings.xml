@@ -1,6 +1,20 @@
 <resources>
-    <string name="app_name">KnowESTGbyGame</string>
+    <string name="app_name">ESTG Game</string>
     <string name="navigation_drawer_open">Mostrar barra de navegação</string>
     <string name="navigation_drawer_close">Esconder barra de navegação</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="game">Jogos</string>
+    <string name="challenges">Desafios</string>
+    <string name="classification">Classificação</string>
+    <string name="my_account">Minha conta</string>
+    <string name="estg_map">Mapa da ESTG</string>
+    <string name="support">Suporte</string>
+    <string name="game_title">Game Title</string>
+    <string name="description">Description</string>
+    <string name="challenge_title">Challenge Title</string>
+    <string name="soluction">Solução</string>
+    <string name="close">Fechar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="game_end">Fim do Jogo</string>
 
 </resources>

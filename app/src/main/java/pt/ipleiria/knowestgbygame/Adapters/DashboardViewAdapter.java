@@ -13,20 +13,20 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import pt.ipleiria.knowestgbygame.ChallengeActivity;
-import pt.ipleiria.knowestgbygame.Constant;
-import pt.ipleiria.knowestgbygame.Models.Challenge;
+import pt.ipleiria.knowestgbygame.Models.Game;
+import pt.ipleiria.knowestgbygame.Activities.GameActivity;
+import pt.ipleiria.knowestgbygame.Helpers.Constant;
 import pt.ipleiria.knowestgbygame.R;
 
-public class ChallengeViewAdapter extends RecyclerView.Adapter<ChallengeViewAdapter.MyViewHolder> {
+public class DashboardViewAdapter extends RecyclerView.Adapter<DashboardViewAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Challenge> challenges;
+    private List<Game> games;
 
 
-    public ChallengeViewAdapter(Context mContext, List<Challenge> challenges) {
+    public DashboardViewAdapter(Context mContext, List<Game> games) {
         this.mContext = mContext;
-        this.challenges = challenges;
+        this.games = games;
     }
 
     @NonNull
@@ -34,24 +34,26 @@ public class ChallengeViewAdapter extends RecyclerView.Adapter<ChallengeViewAdap
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        view = inflater.inflate(R.layout.cardview_item_challenge, parent, false);
+        view = inflater.inflate(R.layout.cardview_item_game, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
-        myViewHolder.title.setText(challenges.get(position).getTitle());
-        myViewHolder.img_thumbnail.setImageResource(challenges.get(position).getThumbnail());
+        myViewHolder.title.setText(games.get(position).getTitle());
+        myViewHolder.img_thumbnail.setImageResource(games.get(position).getThumbnail());
 
 
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ChallengeActivity.class);
+                Intent intent = new Intent(mContext, GameActivity.class);
                 //passing data to the challenge activity
-                intent.putExtra(Constant.CHALLENGE_TITLE, challenges.get(position).getTitle());
-                intent.putExtra(Constant.CHALLENGE_THUMB, challenges.get(position).getThumbnail());
-                intent.putExtra(Constant.CHALLENGE_DESCRIPTION, challenges.get(position).getDescription());
+               /* intent.putExtra(Constant.CHALLENGE_TITLE, games.get(position).getTitle());
+                intent.putExtra(Constant.CHALLENGE_THUMB, games.get(position).getThumbnail());
+                intent.putExtra(Constant.CHALLENGE_DESCRIPTION, games.get(position).getDescription());*/
+
+               intent.putExtra(Constant.GAME, games.get(position));
                 //start the activity
                 mContext.startActivity(intent);
             }
@@ -60,7 +62,7 @@ public class ChallengeViewAdapter extends RecyclerView.Adapter<ChallengeViewAdap
 
     @Override
     public int getItemCount() {
-        return challenges.size();
+        return games.size();
     }
 
 

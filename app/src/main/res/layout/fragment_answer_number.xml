@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:layout_marginTop="80dp">
+
+
+    <EditText
+        android:id="@+id/editText_number_answer"
+        android:hint="Responder aqui"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="13sp"
+        android:inputType="number"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_corner"
+        android:padding="15dp"/>
+
+    <Button
+        android:id="@+id/btn_to_answer"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:background="@drawable/rounded_btn"
+        android:layout_marginTop="75dp"
+        android:layout_centerHorizontal="true"
+        android:text="Responder"
+        android:textColor="@color/colorWhite" />
+
+</RelativeLayout>
