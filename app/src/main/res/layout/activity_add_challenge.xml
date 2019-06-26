@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddChallengeActivity"
+    android:background="@drawable/bgapp"
+    android:padding="5dp"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/img_challenge_thumbnail"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_insert"
+            android:onClick="btnPickImage"/>
+
+        <EditText
+            android:id="@+id/editText_challenge_title"
+            android:hint="Título"
+            android:padding="10dp"
+            android:inputType="text"
+            android:background="@drawable/rounded_corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/editText_challenge_points"
+            android:hint="Pontos"
+            android:padding="10dp"
+            android:inputType="number"
+            android:background="@drawable/rounded_corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/editText_challenge_time"
+            android:hint="Tempo em segundos (1min = 60seg)"
+            android:padding="10dp"
+            android:inputType="number"
+            android:background="@drawable/rounded_corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/editText_challenge_description"
+            android:hint="Descrição"
+            android:minHeight="150dp"
+            android:padding="10dp"
+            android:gravity="top"
+            android:inputType="textCapSentences"
+            android:background="@drawable/rounded_corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/editText_challenge_sugestion"
+            android:hint="Dica para o desafio"
+            android:minHeight="150dp"
+            android:padding="10dp"
+            android:gravity="top"
+            android:inputType="textCapSentences"
+            android:background="@drawable/rounded_corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="10dp"/>
+
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_answerType"
+        android:background="@drawable/rounded_corner"
+        android:minHeight="36dp"/>
+
+        <Button
+            android:id="@+id/btn_to_answer"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:background="@drawable/rounded_btn"
+            android:layout_centerHorizontal="true"
+            android:text="Criar Desafio"
+            android:textColor="@color/colorWhite"
+            android:layout_gravity="center_horizontal"
+            android:onClick="btnNewChallenge"
+            android:layout_marginTop="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

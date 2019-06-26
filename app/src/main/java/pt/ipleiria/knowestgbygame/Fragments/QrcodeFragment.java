@@ -32,6 +32,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 import pt.ipleiria.knowestgbygame.Activities.ChallengeActivity;
+import pt.ipleiria.knowestgbygame.Models.AnswerType;
 import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.R;
 
@@ -133,7 +134,7 @@ public class QrcodeFragment extends Fragment {
                             String text = barcodes.valueAt(0).displayValue;
                             answer.setText(text);
                             cameraSource.stop();
-                            challengeActivity.getAnswer(text, 0);
+                            challengeActivity.getAnswer(text, 0, AnswerType.QRCODE);
                             //need validation of qrcode data, if data is valid, go to next challenge
 
                             //ChallengeActivity.nextChallenge();

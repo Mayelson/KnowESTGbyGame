@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="answerType">
+        <item>Escolha um tipo de resposta</item>
+        <item>Número</item>
+        <item>Texto</item>
+        <item>QRCode</item>
+        <item>Label</item>
+    </string-array>
+
+</resources>

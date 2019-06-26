@@ -43,7 +43,6 @@
                 android:title="@string/support" />
         </menu>
     </item>
-    >
-
 
 </menu>
+

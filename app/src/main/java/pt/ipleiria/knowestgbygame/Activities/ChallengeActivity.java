@@ -29,17 +29,21 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
+import java.util.Locale;
 
 import pt.ipleiria.knowestgbygame.Fragments.ChallengeFragment;
 import pt.ipleiria.knowestgbygame.Fragments.ClassificationFragment;
 import pt.ipleiria.knowestgbygame.Fragments.DashboardFragment;
+import pt.ipleiria.knowestgbygame.Fragments.LabelFragment;
 import pt.ipleiria.knowestgbygame.Fragments.NotFoundFragment;
 import pt.ipleiria.knowestgbygame.Fragments.NumberFragment;
 import pt.ipleiria.knowestgbygame.Fragments.ProfileFragment;
 import pt.ipleiria.knowestgbygame.Fragments.QrcodeFragment;
 import pt.ipleiria.knowestgbygame.Fragments.TextFragment;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
+import pt.ipleiria.knowestgbygame.Models.AnswerType;
 import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.Models.Game;
 import pt.ipleiria.knowestgbygame.R;
@@ -94,93 +98,38 @@ public class ChallengeActivity extends AppCompatActivity {
         startChallenge();
     }
 
-    public void getAnswer(String text, int number) {
-        Toast.makeText(this, "Challenge get data from fragment: " + text, Toast.LENGTH_SHORT).show();
+    public void getAnswer(String result, int number, AnswerType type) {
+        switch(type) {
+            case QRCODE:
+
+                break;
+            case TEXT:
+
+                break;
+            case NUMBER:
+                result = Integer.toString(number);
+                break;
+            case FITRUN:
+
+                break;
+            case MAP:
+
+                break;
+            case LABEL:
+                //
+                String[] textOptions = result.split(":");
+                for (String text : textOptions)
+                {
+                    if ( text.toLowerCase().indexOf("keyboard".toLowerCase()) != -1 ) {
+                        result = "Foto correcta";
+                        break;
+                    }
+                }
+                break;
+        }
+        Toast.makeText(this, "Challenge get data from fragment: " + result, Toast.LENGTH_SHORT).show();
         imageButton.setVisibility(View.VISIBLE);
     }
-
-
-    public void startQRCodeScanner(){
-
-        //CHECK PERMISSION CAMERA
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST);
-        }
-
-        cameraView.setZOrderMediaOverlay(true);
-        surfaceHolder = cameraView.getHolder();
-        barcode = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.QR_CODE)
-                .build();
-
-        if (!barcode.isOperational()) {
-            //analyse whats happens in this case
-            Toast.makeText(this, "Não foi possível inicializar o Leitor de QRCode", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        cameraSource = new CameraSource.Builder(this, barcode)
-                .setFacing(CameraSource.CAMERA_FACING_BACK)
-                .setRequestedFps(24)
-                .setAutoFocusEnabled(true)
-                .setRequestedPreviewSize(1920, 1024 )
-                .build();
-
-        cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                try {
-                    if (ContextCompat.checkSelfPermission(ChallengeActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                       cameraSource.start(cameraView.getHolder());
-                    }else {
-                        Toast.makeText(ChallengeActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                    }
-                }catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
-            }
-        });
-
-        barcode.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-            }
-
-            @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
-                if (barcodes.size() > 0) {
-                    answer.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                            }
-                            challengeCardView.setCardBackgroundColor(getResources().getColor(R.color.colorBlueCustom));
-                            answer.setText(barcodes.valueAt(0).displayValue);
-                            cameraSource.stop();
-                            //need validation of qrcode data, if data is valid, go to next challenge
-
-                            nextChallenge();
-                        }
-                    });
-                }
-            }
-        });
-    }
-
 
 
     public void startChallenge(){
@@ -210,7 +159,7 @@ public class ChallengeActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_answer, new NotFoundFragment()).commit();
                 break;
             case LABEL:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_answer, new NotFoundFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_answer, new LabelFragment()).commit();
                 break;
         }
     }

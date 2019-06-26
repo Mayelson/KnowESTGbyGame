@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import pt.ipleiria.knowestgbygame.Activities.ChallengeActivity;
+import pt.ipleiria.knowestgbygame.Models.AnswerType;
 import pt.ipleiria.knowestgbygame.R;
 
 public class TextFragment extends Fragment {
@@ -54,7 +55,7 @@ public class TextFragment extends Fragment {
 
                 closeKeyboard();
 
-                challengeActivity.getAnswer(answer, 0);
+                challengeActivity.getAnswer(answer, 0, AnswerType.TEXT);
 
                 //TODO
                 //verify if answer is equal to possible answer

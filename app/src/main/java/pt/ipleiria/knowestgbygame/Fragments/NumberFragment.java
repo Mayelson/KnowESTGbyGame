@@ -15,13 +15,14 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import pt.ipleiria.knowestgbygame.Activities.ChallengeActivity;
+import pt.ipleiria.knowestgbygame.Models.AnswerType;
 import pt.ipleiria.knowestgbygame.R;
 
 public class NumberFragment extends Fragment {
 
-    private Button btnAnswer;
     private EditText number_edit_Text;
     private int number;
+    private Button btnAnswer;
     private View view;
     private ChallengeActivity challengeActivity;
 
@@ -46,7 +47,7 @@ public class NumberFragment extends Fragment {
                 number = Integer.parseInt(text);
                 Toast.makeText(NumberFragment.this.getContext(), "Resposta enviada " + number, Toast.LENGTH_SHORT).show();
                 closeKeyboard();
-                challengeActivity.getAnswer("", number);
+                challengeActivity.getAnswer("", number, AnswerType.NUMBER);
                 //TODO
                 //verify if number is equal to possible answer
 

@@ -16,5 +16,14 @@
     <string name="close">Fechar</string>
     <string name="confirm">Confirmar</string>
     <string name="game_end">Fim do Jogo</string>
+    <string name="description_foto">Selecione o botão \'Responder\' para tirar uma foto.</string>
+
+    <string name="dialog_select_prompt">Escolha uma opção</string>
+    <string name="dialog_select_camera">Camera</string>
+    <string name="dialog_select_gallery">Gallery</string>
+    <string name="loading_message">A carregar image. Por favor aguarde</string>
+
+    <string name="image_picker_error">Algo está errado com essa imagem. Escolha uma diferente por favor.</string>
+    <string name="img_loaded">Imagem carregada com sucesso!</string>
 
 </resources>

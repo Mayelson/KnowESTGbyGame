@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,13 +24,15 @@ import pt.ipleiria.knowestgbygame.R;
 
 public class DashboardFragment extends Fragment {
 
-    List<Game> games;
-    List<Challenge> challenges;
-    List<Sugestion> sugestions;
+    private List<Game> games;
+    private List<Challenge> challenges;
+    private List<Sugestion> sugestions;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         games = new ArrayList<>();
         sugestions = new ArrayList<>();
         challenges = new ArrayList<>();
@@ -36,6 +40,7 @@ public class DashboardFragment extends Fragment {
         sugestions.add(new Sugestion("A Sala encontra no Edifício A"));
         sugestions.add(new Sugestion("A cantina 2 encontra-se ao pé da Biblioteca José Saramago"));
 
+        challenges.add(new Challenge("Equipamento informático", "Tirar ma foto a um teclado.", R.drawable.ic_map, 30000, sugestions, AnswerType.LABEL));
         challenges.add(new Challenge("Edifícios da ESTG", "Quantos edifícios tem ESTG?", R.drawable.ic_map, 30000, sugestions, AnswerType.NUMBER));
         // challenges.add(new Challenge("Identificação do rosto", "Caminhe sorindo ate o Bar da Cantina 2", R.drawable.ic_launcher_foreground, 60000, sugestions, AnswerType.LABEL));
         challenges.add(new Challenge("Biblioteca ESTG", "Como se chama a biblioteca da ESTG (Campus 2)?", R.drawable.ic_map, 60000, sugestions, AnswerType.TEXT));
@@ -46,13 +51,21 @@ public class DashboardFragment extends Fragment {
         games.add(new Game("Jogo 2", "Este jogo, permite aos jogadores conherem os bares da ESTG", R.drawable.ic_launcher_foreground, challenges, "Mayelson", 20));
         games.add(new Game("Jogo 3", "Este jogo permite aos jogadores conhecerem a Biblioteca José saramago", R.drawable.ic_launcher_foreground, challenges, "Mayelson", 5));
 
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycleView_challenge);
+
+        recyclerView = view.findViewById(R.id.recycleView_challenge);
         DashboardViewAdapter myAdapter = new DashboardViewAdapter(this.getContext(), games);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         recyclerView.setAdapter(myAdapter);
 
+        setHasOptionsMenu(true);
+
         return view;
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        if(menu!=null){
+            menu.clear();
+        }
+    }
 }
