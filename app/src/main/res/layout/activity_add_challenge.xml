@@ -76,7 +76,7 @@
 
         <EditText
             android:id="@+id/editText_challenge_sugestion"
-            android:hint="Dica para o desafio"
+            android:hint="Dica para o desafio (opcional)"
             android:minHeight="150dp"
             android:padding="10dp"
             android:gravity="top"
@@ -88,16 +88,28 @@
             android:imeOptions="actionDone"
             android:layout_marginBottom="10dp"/>
 
-
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner_answerType"
         android:background="@drawable/rounded_corner"
-        android:minHeight="36dp"/>
+        android:minHeight="36dp"
+        android:layout_marginBottom="10dp"/>
+
+
+        <EditText
+            android:id="@+id/editText_challenge_answer"
+            android:hint="Resposta esperada"
+            android:padding="10dp"
+            android:inputType="text"
+            android:background="@drawable/rounded_corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:imeOptions="actionDone"/>
 
         <Button
-            android:id="@+id/btn_to_answer"
+            android:id="@+id/btn_create_new_challenge"
             android:layout_width="150dp"
             android:layout_height="35dp"
             android:background="@drawable/rounded_btn"

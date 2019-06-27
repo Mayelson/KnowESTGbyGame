@@ -1,5 +1,6 @@
 package pt.ipleiria.knowestgbygame.Activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import pt.ipleiria.knowestgbygame.Fragments.ChallengeFragment;
 import pt.ipleiria.knowestgbygame.Fragments.ClassificationFragment;
@@ -18,6 +20,7 @@ import pt.ipleiria.knowestgbygame.Fragments.GameFragment;
 import pt.ipleiria.knowestgbygame.Fragments.MapFragment;
 import pt.ipleiria.knowestgbygame.Fragments.ProfileFragment;
 import pt.ipleiria.knowestgbygame.Fragments.SupportFragment;
+import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.R;
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
@@ -91,4 +94,5 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 }

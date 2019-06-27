@@ -11,13 +11,30 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import pt.ipleiria.knowestgbygame.Models.Challenge;
-import pt.ipleiria.knowestgbygame.Models.Game;
 import pt.ipleiria.knowestgbygame.R;
 
 public class ChallengeViewAdapter extends RecyclerView.Adapter <ChallengeViewAdapter.ChallengeViewHolder> {
 
     private ArrayList<Challenge> challengesList;
+    private OnItemClickListener itemClickListener;
+    private OnLongClickListener longClickListener;
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public interface OnLongClickListener {
+        void onItemLongClick(int position);
+    }
+
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        itemClickListener = listener;
+    }
+
+    public void setOnLongClickListener(OnLongClickListener listener) {
+        longClickListener = listener;
+    }
 
     public ChallengeViewAdapter(ArrayList<Challenge> challenges){
         challengesList = challenges;
@@ -28,15 +45,16 @@ public class ChallengeViewAdapter extends RecyclerView.Adapter <ChallengeViewAda
     public ChallengeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_challenge_row, parent, false);
-        ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(view);
+        ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(view, itemClickListener, longClickListener);
         return challengeViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChallengeViewHolder gameViewHolder, int position) {
+    public void onBindViewHolder(@NonNull ChallengeViewHolder challengeViewHolder, int position) {
         Challenge currentChallenge = challengesList.get(position);
-        gameViewHolder.gameImage.setImageResource(currentChallenge.getThumbnail());
-        gameViewHolder.title.setText(currentChallenge.getTitle());
+        challengeViewHolder.challengeImage.setImageResource(currentChallenge.getThumbnail());
+        challengeViewHolder.title.setText(currentChallenge.getTitle());
+
     }
 
     @Override
@@ -47,14 +65,40 @@ public class ChallengeViewAdapter extends RecyclerView.Adapter <ChallengeViewAda
 
     public static class ChallengeViewHolder extends  RecyclerView.ViewHolder {
 
-        public ImageView gameImage;
+        public ImageView challengeImage;
         public TextView title;
 
 
-        public ChallengeViewHolder(@NonNull View itemView) {
+        public ChallengeViewHolder(@NonNull View itemView, final OnItemClickListener clickListener, final OnLongClickListener longClickListener) {
             super(itemView);
-            gameImage = itemView.findViewById(R.id.image_challenge_row);
+            challengeImage = itemView.findViewById(R.id.image_challenge_row);
             title = itemView.findViewById(R.id.textView_title_challenge);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (clickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            clickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (longClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            longClickListener.onItemLongClick(position);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
         }
     }
 }

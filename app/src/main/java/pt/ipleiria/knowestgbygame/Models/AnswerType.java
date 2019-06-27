@@ -9,5 +9,5 @@ public enum AnswerType {
     TAKEFOTO,
     DECIMALNUMBER,
     FITRUN,
-    LABEL,
+    OBJECTDETECTION,
 }

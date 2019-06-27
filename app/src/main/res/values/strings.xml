@@ -25,5 +25,11 @@
 
     <string name="image_picker_error">Algo está errado com essa imagem. Escolha uma diferente por favor.</string>
     <string name="img_loaded">Imagem carregada com sucesso!</string>
+    <string name="new_challenge">Criar Novo Desafio</string>
+    <string name="message_delete_contact">Tem a certeza que pretende eliminar o desafio?</string>
+    <string name="delete_contact_title">Eliminar Desafio</string>
+    <string name="cancel">cancelar</string>
+    <string name="edit">Editar</string>
+    <string name="edit_challenge">Editar desafio</string>
 
 </resources>

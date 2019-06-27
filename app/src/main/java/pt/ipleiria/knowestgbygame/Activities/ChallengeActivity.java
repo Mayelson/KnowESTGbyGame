@@ -1,21 +1,12 @@
 package pt.ipleiria.knowestgbygame.Activities;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.CountDownTimer;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -24,22 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
-import java.io.IOException;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
-import java.util.Locale;
 
-import pt.ipleiria.knowestgbygame.Fragments.ChallengeFragment;
-import pt.ipleiria.knowestgbygame.Fragments.ClassificationFragment;
-import pt.ipleiria.knowestgbygame.Fragments.DashboardFragment;
 import pt.ipleiria.knowestgbygame.Fragments.LabelFragment;
 import pt.ipleiria.knowestgbygame.Fragments.NotFoundFragment;
 import pt.ipleiria.knowestgbygame.Fragments.NumberFragment;
-import pt.ipleiria.knowestgbygame.Fragments.ProfileFragment;
 import pt.ipleiria.knowestgbygame.Fragments.QrcodeFragment;
 import pt.ipleiria.knowestgbygame.Fragments.TextFragment;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
@@ -115,7 +97,7 @@ public class ChallengeActivity extends AppCompatActivity {
             case MAP:
 
                 break;
-            case LABEL:
+            case OBJECTDETECTION:
                 //
                 String[] textOptions = result.split(":");
                 for (String text : textOptions)
@@ -158,7 +140,7 @@ public class ChallengeActivity extends AppCompatActivity {
             case MAP:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_answer, new NotFoundFragment()).commit();
                 break;
-            case LABEL:
+            case OBJECTDETECTION:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_answer, new LabelFragment()).commit();
                 break;
         }
@@ -260,7 +242,7 @@ public class ChallengeActivity extends AppCompatActivity {
         stopTimer();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.soluction)
-                .setMessage(currentChallenge.getSugestions().get(0).getDescription());
+                .setMessage(currentChallenge.getSuggestion());
         // Add the buttons
         builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

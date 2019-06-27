@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.text.TextBlock;
-import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -269,7 +264,7 @@ public class LabelFragment extends Fragment {
         protected void onPostExecute(String result) {
             ChallengeActivity activity = challengeAtivityWeakReference.get();
             if (activity != null && !activity.isFinishing()) {
-                activity.getAnswer(result, 0, AnswerType.LABEL);
+                activity.getAnswer(result, 0, AnswerType.OBJECTDETECTION);
                 TextView imageDetail = activity.findViewById(R.id.label_info);
                 imageDetail.setText(activity.getString(R.string.img_loaded));
             }

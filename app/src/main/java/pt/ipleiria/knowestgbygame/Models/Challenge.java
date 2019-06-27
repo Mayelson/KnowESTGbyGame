@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
+import pt.ipleiria.knowestgbygame.R;
+
 public class Challenge implements Serializable {
 
     @SerializedName("Title")
@@ -19,19 +21,24 @@ public class Challenge implements Serializable {
     @SerializedName("time")
     private long time;
 
-    @SerializedName("Sugestion")
-    private List<Sugestion> sugestions;
+    @SerializedName("Suggestion")
+    private String suggestion;
 
     @SerializedName("answerType")
     private AnswerType answerType;
 
-    public Challenge(String title, String description, int thumbnail, long time, List<Sugestion> sugestions, AnswerType answerType) {
+    @SerializedName("points")
+    private long points;
+
+    @SerializedName("Answer")
+    private String answer;
+
+    public Challenge(String title, String description, long time, AnswerType answerType, long points) {
         this.title = title;
         this.description = description;
-        this.thumbnail = thumbnail;
         this.time = time;
-        this.sugestions = sugestions;
         this.answerType = answerType;
+        this.points = points;
     }
 
     public String getTitle() {
@@ -66,13 +73,6 @@ public class Challenge implements Serializable {
         this.time = time;
     }
 
-    public List<Sugestion> getSugestions() {
-        return sugestions;
-    }
-
-    public void setSugestions(List<Sugestion> sugestions) {
-        this.sugestions = sugestions;
-    }
 
     public AnswerType getAnswerType() {
         return answerType;
@@ -80,5 +80,29 @@ public class Challenge implements Serializable {
 
     public void setAnswerType(AnswerType answerType) {
         this.answerType = answerType;
+    }
+
+    public String getSuggestion() {
+        return suggestion;
+    }
+
+    public void setSuggestion(String suggestion) {
+        this.suggestion = suggestion;
+    }
+
+    public long getPoints() {
+        return points;
+    }
+
+    public void setPoints(long points) {
+        this.points = points;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

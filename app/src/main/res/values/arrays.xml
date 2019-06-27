@@ -6,7 +6,9 @@
         <item>Número</item>
         <item>Texto</item>
         <item>QRCode</item>
-        <item>Label</item>
+        <item>Deteção de Objecto</item>
+        <item>Deteção de Logo</item>
+        <item>Atividade (andar/correr)</item>
     </string-array>
 
 </resources>
