@@ -5,26 +5,29 @@
     android:background="@color/colorBlueCustom"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:paddingBottom="65px"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round" />
+        android:layout_width="180px"
+        android:layout_height="180px"
+        android:layout_marginLeft="50px"
+        android:src="@drawable/ic_avatar" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="UserName"
+        android:layout_marginLeft="50px"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="email@user.com"
+        android:layout_marginLeft="50px"
         android:textColor="@color/colorWhite"/>
 
 

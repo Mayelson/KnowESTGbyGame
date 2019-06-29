@@ -17,7 +17,7 @@
             android:id="@+id/challenge_answer"
             android:textColor="@color/colorWhite"
             android:background="@color/colorBlueCustom"
-            android:text="A scanear ..."
+            android:text="@string/ToScanner"
             android:textSize="13sp"
             android:gravity="center"
             android:padding="10dp"

@@ -23,7 +23,7 @@
             android:layout_marginBottom="30dp"
             android:text="Iniciar Sessão"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorGray500"
             android:textSize="20sp"/>
 
         <EditText
@@ -33,10 +33,12 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_corner"
             android:hint="Email"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:imeOptions="actionDone"
             android:inputType="textEmailAddress"
             android:padding="10dp"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/editText_password_login"
@@ -45,10 +47,12 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_corner"
             android:hint="Password"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:padding="10dp"
-            android:textSize="13sp"/>
+            android:textSize="14sp"/>
 
 
         <Button
@@ -57,9 +61,11 @@
             android:layout_height="35dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/rounded_btn"
+            android:layout_marginTop="15dp"
+            android:background="@color/colorBlue"
             android:onClick="btnStartLogin"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:text="login"
             android:textColor="@color/colorWhite" />
 
@@ -67,9 +73,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Ainda não tem conta? Registe-se aqui!"
+            android:text="@string/RegisterHere"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorGray500"
             android:textSize="13sp"
             android:onClick="goToRegister"/>
 

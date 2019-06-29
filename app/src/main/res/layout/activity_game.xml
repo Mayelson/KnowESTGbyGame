@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:padding="10dp">
+        android:padding="15dp">
 
 
         <LinearLayout
@@ -34,22 +34,26 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:id="@+id/challenge_item_title"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorGray500"/>
 
             <TextView
-                android:textAlignment="center"
-                android:layout_width="300dp"
-                android:padding="30dp"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:textColor="@color/colorBlueCustom"
-                android:lineSpacingExtra="6dp"
-                android:text="@string/description"
                 android:id="@+id/challenge_item_descr"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="50px"
+                android:layout_marginRight="50px"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner"
-                android:shadowRadius="12"/>
+                android:gravity="center"
+                android:lineSpacingExtra="6dp"
+                android:padding="30dp"
+
+                android:shadowRadius="12"
+                android:text="@string/description"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlueCustom"
+                android:textSize="18sp" />
 
 
             <ImageButton
@@ -81,6 +85,7 @@
                     android:layout_alignParentRight="true"
                     android:src="@android:drawable/ic_menu_revert"
                     android:background="@drawable/rounded_btn"
+                    android:layout_marginLeft="50px"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:onClick="btnBack"
@@ -92,6 +97,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_alignParentTop="true"
+                    android:layout_marginRight="50px"
                     android:layout_alignParentRight="true"
                     android:src="@android:drawable/ic_menu_share"
                     android:background="@drawable/rounded_btn"

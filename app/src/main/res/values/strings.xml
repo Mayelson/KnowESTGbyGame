@@ -9,27 +9,27 @@
     <string name="my_account">Minha conta</string>
     <string name="estg_map">Mapa da ESTG</string>
     <string name="support">Suporte</string>
-    <string name="game_title">Game Title</string>
-    <string name="description">Description</string>
-    <string name="challenge_title">Challenge Title</string>
+    <string name="game_title">Título do Jogo</string>
+    <string name="description">Descrição</string>
+    <string name="challenge_title">Título do Desafio</string>
     <string name="soluction">Solução</string>
     <string name="close">Fechar</string>
     <string name="confirm">Confirmar</string>
-    <string name="game_end">Fim do Jogo</string>
+    <string name="game_end">Fim de Jogo</string>
     <string name="description_foto">Selecione o botão \'Responder\' para tirar uma foto.</string>
 
     <string name="dialog_select_prompt">Escolha uma opção</string>
     <string name="dialog_select_camera">Camera</string>
-    <string name="dialog_select_gallery">Gallery</string>
-    <string name="loading_message">A carregar image. Por favor aguarde</string>
+    <string name="dialog_select_gallery">Galeria</string>
+    <string name="loading_message">A carregar imagem. Por favor aguarde</string>
 
     <string name="image_picker_error">Algo está errado com essa imagem. Escolha uma diferente por favor.</string>
     <string name="img_loaded">Imagem carregada com sucesso!</string>
-    <string name="new_challenge">Criar Novo Desafio</string>
+    <string name="new_challenge">Criar novo desafio</string>
     <string name="message_delete_challenge">Tem a certeza que pretende eliminar o desafio?</string>
     <string name="delete_challenge_title">Eliminar Desafio</string>
     <string name="delete_game_title">Eliminar Jogo</string>
-    <string name="cancel">cancelar</string>
+    <string name="cancel">Cancelar</string>
     <string name="edit">Editar</string>
     <string name="clear_all_label">Limpar</string>
     <string name="edit_challenge">Editar desafio</string>
@@ -38,12 +38,16 @@
     <string name="message_delete_game">Tem a certeza que pretende eliminar o jogo?</string>
     <string name="already_registered">Erro ao registar</string>
     <string name="already_registered_message">Este email ja se encontra registrado</string>
-    <string name="required_name">Nome é obrigatório</string>
-    <string name="required_email">Email obrigatório</string>
+    <string name="required_name">O campo "Nome" é obrigatório</string>
+    <string name="required_email">O campo "Email" é obrigatório</string>
     <string name="invalid_email">Por favor, insira um email válido</string>
-    <string name="required_password">Password é obrigatória</string>
-    <string name="invalid_password">Password deve conter mais de 6 caracteres</string>
+    <string name="required_password">O campo "Password" é obrigatório</string>
+    <string name="invalid_password">A Password deve conter mais de 6 caracteres</string>
     <string name="games_played">Jogos efetuados</string>
+    <string name="RegisterHere">Ainda não tem conta? Registe-se aqui!</string>
+    <string name="AlreadyHaveAnAccount">Ja tem uma conta? Inicia sessão aqui!</string>
+    <string name="ToScanner">A scannar ...</string>
+    <string name="Classification">Classificação</string>
 
 
 </resources>

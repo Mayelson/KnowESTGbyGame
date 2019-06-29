@@ -27,7 +27,7 @@
             android:background="@drawable/circle"
             android:padding="3dp"
             android:scaleType="centerInside"
-            android:src="@drawable/profile_pic"
+            android:src="@drawable/ic_avatar"
             android:id="@+id/img_profile"/>
 
     </RelativeLayout>
@@ -41,7 +41,7 @@
         android:layout_marginTop="15sp"
         android:fontFamily="sans-serif-light"
         android:text="Perfil Name"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorGray500"
         android:textSize="32sp" />
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif"
         android:text="Email address"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorGray500"
         android:textSize="14sp" />
 
 
@@ -186,6 +186,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="50px"
+            android:layout_marginLeft="50px"
             android:orientation="vertical">
 
 
@@ -199,7 +201,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
                 android:padding="10dp"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/editText_email_profile"
@@ -211,14 +213,14 @@
                 android:imeOptions="actionDone"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
 
             <Button
                 android:id="@+id/btn_edit_profile"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:background="@drawable/rounded_btn"
+                android:background="@color/colorBlue"
                 android:layout_centerHorizontal="true"
                 android:text="Editar"
                 android:textColor="@color/colorWhite"

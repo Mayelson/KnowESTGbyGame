@@ -23,7 +23,7 @@
             android:text="Title"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorGray500"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/image_game_row"
             android:id="@+id/textView_title_game"/>
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="Admin"
             android:textSize="15sp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="0px"
             android:layout_below="@+id/textView_title_game"
             android:layout_toEndOf="@+id/image_game_row"
             android:id="@+id/textView_createdBy_game"/>

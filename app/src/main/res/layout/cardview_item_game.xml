@@ -4,7 +4,9 @@
     android:layout_width="170dp"
     android:layout_height="170dp"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
+    android:layout_marginTop="80px"
+    android:layout_marginLeft="50px"
+    android:layout_marginRight="50px"
     cardview:cardCornerRadius="4dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -19,13 +21,13 @@
             android:id="@+id/challenge_img"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:scaleType="centerCrop"
-            android:background="@color/colorWhite"/>
+            android:background="@color/colorWhite"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/challenge_title"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorBlueCustom"
+            android:background="@color/colorBlue"
             android:textSize="13sp"
             android:gravity="center"
             android:layout_width="match_parent"
