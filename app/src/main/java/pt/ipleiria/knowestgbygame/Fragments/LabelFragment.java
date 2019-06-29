@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipleiria.knowestgbygame.Activities.ChallengeActivity;
-import pt.ipleiria.knowestgbygame.Activities.MainActivity;
+import pt.ipleiria.knowestgbygame.Helpers.Constant;
 import pt.ipleiria.knowestgbygame.Helpers.PackageManagerUtils;
 import pt.ipleiria.knowestgbygame.Helpers.PermissionUtils;
 import pt.ipleiria.knowestgbygame.Models.AnswerType;
@@ -62,20 +62,6 @@ public class LabelFragment extends Fragment {
     private ImageView imgResult;
     private boolean isImageFitToScreen;
     private TextView infoTextView;
-
-    private static final String CLOUD_VISION_API_KEY = "AIzaSyA0htgANNhaisAmb8q5h65RfKWzPpihT-Q";
-    public static final String FILE_NAME = "temp.jpg";
-    private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
-    private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
-    private static final int MAX_LABEL_RESULTS = 10;
-    private static final int MAX_DIMENSION = 1200;
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int GALLERY_PERMISSIONS_REQUEST = 0;
-    private static final int GALLERY_IMAGE_REQUEST = 1;
-    public static final int CAMERA_PERMISSIONS_REQUEST = 2;
-    public static final int CAMERA_IMAGE_REQUEST = 3;
-
 
     @Nullable
     @Override
@@ -124,32 +110,31 @@ public class LabelFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
     public void startGalleryChooser() {
-        if (PermissionUtils.requestPermission(challengeActivity, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (PermissionUtils.requestPermission(challengeActivity, Constant.GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Escolha uma imagem"), GALLERY_IMAGE_REQUEST);
+            startActivityForResult(Intent.createChooser(intent, "Escolha uma imagem"), Constant.GALLERY_IMAGE_REQUEST);
         }
     }
 
     public void startCamera() {
-        if (PermissionUtils.requestPermission(challengeActivity, CAMERA_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)) {
+        if (PermissionUtils.requestPermission(challengeActivity, Constant.CAMERA_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             Uri photoUri = FileProvider.getUriForFile(LabelFragment.this.getContext(), challengeActivity.getPackageName() + ".provider", getCameraFile());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivityForResult(intent, CAMERA_IMAGE_REQUEST);
+            startActivityForResult(intent, Constant.CAMERA_IMAGE_REQUEST);
         }
     }
 
     public File getCameraFile() {
         File dir = challengeActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        return new File(dir, FILE_NAME);
+        return new File(dir, Constant.FILE_NAME);
     }
 
     @Override
@@ -157,13 +142,13 @@ public class LabelFragment extends Fragment {
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case CAMERA_PERMISSIONS_REQUEST:
-                if (PermissionUtils.permissionGranted(requestCode, CAMERA_PERMISSIONS_REQUEST, grantResults)) {
+            case Constant.CAMERA_PERMISSIONS_REQUEST:
+                if (PermissionUtils.permissionGranted(requestCode, Constant.CAMERA_PERMISSIONS_REQUEST, grantResults)) {
                     startCamera();
                 }
                 break;
-            case GALLERY_PERMISSIONS_REQUEST:
-                if (PermissionUtils.permissionGranted(requestCode, GALLERY_PERMISSIONS_REQUEST, grantResults)) {
+            case Constant.GALLERY_PERMISSIONS_REQUEST:
+                if (PermissionUtils.permissionGranted(requestCode, Constant.GALLERY_PERMISSIONS_REQUEST, grantResults)) {
                     startGalleryChooser();
                 }
                 break;
@@ -174,9 +159,9 @@ public class LabelFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //get result of image
-        if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == challengeActivity.RESULT_OK && data != null) {
+        if (requestCode == Constant.GALLERY_IMAGE_REQUEST && resultCode == challengeActivity.RESULT_OK && data != null) {
             uploadImage(data.getData());
-        } else if (requestCode == CAMERA_IMAGE_REQUEST && resultCode == challengeActivity.RESULT_OK) {
+        } else if (requestCode == Constant.CAMERA_IMAGE_REQUEST && resultCode == challengeActivity.RESULT_OK) {
             Uri photoUri = FileProvider.getUriForFile(LabelFragment.this.getContext(), challengeActivity.getPackageName() + ".provider", getCameraFile());
             uploadImage(photoUri);
         }
@@ -186,18 +171,18 @@ public class LabelFragment extends Fragment {
         if (uri != null) {
             try {
                 // scale the image to save on bandwidth
-                Bitmap bitmap = scaleBitmapDown(MediaStore.Images.Media.getBitmap(challengeActivity.getContentResolver(), uri), MAX_DIMENSION);
+                Bitmap bitmap = scaleBitmapDown(MediaStore.Images.Media.getBitmap(challengeActivity.getContentResolver(), uri), Constant.MAX_DIMENSION);
 
                 callCloudVision(bitmap);
                 imgResult.setImageBitmap(bitmap);
                 btnAnswer.setVisibility(View.INVISIBLE);
 
             } catch (IOException e) {
-                Log.d(TAG, "Image picking failed because " + e.getMessage());
+                Log.d(Constant.TAG, "Image picking failed because " + e.getMessage());
                 Toast.makeText(LabelFragment.this.getContext(), R.string.image_picker_error, Toast.LENGTH_LONG).show();
             }
         } else {
-            Log.d(TAG, "Image picker gave us a null image.");
+            Log.d(Constant.TAG, "Image picker gave us a null image.");
             Toast.makeText(LabelFragment.this.getContext(), R.string.image_picker_error, Toast.LENGTH_LONG).show();
         }
     }
@@ -231,7 +216,7 @@ public class LabelFragment extends Fragment {
             AsyncTask<Object, Void, String> labelDetectionTask = new LableDetectionTask(challengeActivity, prepareAnnotationRequest(bitmap));
             labelDetectionTask.execute();
         } catch (IOException e) {
-            Log.d(TAG, "failed to make API request because of other IOException " + e.getMessage());
+            Log.d(Constant.TAG, "failed to make API request because of other IOException " + e.getMessage());
         }
     }
 
@@ -294,7 +279,7 @@ public class LabelFragment extends Fragment {
         JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
 
         VisionRequestInitializer requestInitializer =
-                new VisionRequestInitializer(CLOUD_VISION_API_KEY) {
+                new VisionRequestInitializer(Constant.CLOUD_VISION_API_KEY) {
                     /**
                      * We override this so we can inject important identifying fields into the HTTP
                      * headers. This enables use of a restricted cloud platform API key.
@@ -305,11 +290,11 @@ public class LabelFragment extends Fragment {
                         super.initializeVisionRequest(visionRequest);
 
                         String packageName = challengeActivity.getPackageName();
-                        visionRequest.getRequestHeaders().set(ANDROID_PACKAGE_HEADER, packageName);
+                        visionRequest.getRequestHeaders().set(Constant.ANDROID_PACKAGE_HEADER, packageName);
 
                         String sig = PackageManagerUtils.getSignature(challengeActivity.getPackageManager(), packageName);
 
-                        visionRequest.getRequestHeaders().set(ANDROID_CERT_HEADER, sig);
+                        visionRequest.getRequestHeaders().set(Constant.ANDROID_CERT_HEADER, sig);
                     }
                 };
 
@@ -339,7 +324,7 @@ public class LabelFragment extends Fragment {
             annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
                 Feature labelDetection = new Feature();
                 labelDetection.setType("LABEL_DETECTION");
-                labelDetection.setMaxResults(MAX_LABEL_RESULTS);
+                labelDetection.setMaxResults(Constant.MAX_LABEL_RESULTS);
                 add(labelDetection);
             }});
 
@@ -351,7 +336,7 @@ public class LabelFragment extends Fragment {
                 vision.images().annotate(batchAnnotateImagesRequest);
         // Due to a bug: requests to Vision API containing large images fail when GZipped.
         annotateRequest.setDisableGZipContent(true);
-        Log.d(TAG, "created Cloud Vision request object, sending request");
+        Log.d(Constant.TAG, "created Cloud Vision request object, sending request");
 
         return annotateRequest;
     }

@@ -1,10 +1,12 @@
 package pt.ipleiria.knowestgbygame.Fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,60 +14,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import pt.ipleiria.knowestgbygame.Activities.AddGameActivity;
-import pt.ipleiria.knowestgbygame.Activities.MainActivity;
+import pt.ipleiria.knowestgbygame.Activities.DashboardActivity;
 import pt.ipleiria.knowestgbygame.Adapters.GameViewAdapter;
-import pt.ipleiria.knowestgbygame.Models.AnswerType;
-import pt.ipleiria.knowestgbygame.Models.Challenge;
-import pt.ipleiria.knowestgbygame.Models.Game;
+import pt.ipleiria.knowestgbygame.Helpers.Constant;
 import pt.ipleiria.knowestgbygame.Models.GamesManager;
-import pt.ipleiria.knowestgbygame.Models.Sugestion;
 import pt.ipleiria.knowestgbygame.R;
 
 public class GameFragment extends Fragment {
 
-    //private ArrayList<Game> games;
-    //private ArrayList<Challenge> challenges;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private GameViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private View view;
-    private MainActivity mainActivity;
+    private DashboardActivity dashboardActivity;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_game, container, false);
-        mainActivity = (MainActivity) getActivity();
-
+        dashboardActivity = (DashboardActivity) getActivity();
+        dashboardActivity.setTitle(R.string.game);
         setHasOptionsMenu(true);
-
-        //createGamesExamples();
         buildRecycleView();
-
-
 
         return view;
     }
 
-    public void createGamesExamples() {
-    /*    games = new ArrayList<>();
-        challenges = new ArrayList<>();
-
-        challenges.add(new Challenge("Equipamento informático", "Tirar ma foto a um teclado.", R.drawable.ic_map, 30000, AnswerType.OBJECTDETECTION, 50));
-        challenges.add(new Challenge("Edifícios da ESTG", "Quantos edifícios tem ESTG?", R.drawable.ic_map, 30000, AnswerType.NUMBER, 10));
-        // challenges.add(new Challenge("Identificação do rosto", "Caminhe sorindo ate o Bar da Cantina 2", R.drawable.ic_launcher_foreground, 60000, sugestions, AnswerType.OBJECTDETECTION));
-        challenges.add(new Challenge("Biblioteca ESTG", "Como se chama a biblioteca da ESTG (Campus 2)?", R.drawable.ic_map, 60000, AnswerType.TEXT, 20));
-        challenges.add(new Challenge("Ler QRCode", "Faça a leitura do QrCode na sala 2.04", R.drawable.ic_challenge, 120000, AnswerType.QRCODE, 100));
-        challenges.add(new Challenge("Bares da ESTG", "Quantos Bares têm a ESTG?", R.drawable.ic_map, 30000, AnswerType.NUMBER, 30));
-
-        games.add(new Game("Jogo 1", "Este jogo permite aos jogadores conhecerem as salas do edificio A ", R.drawable.ic_launcher_foreground, challenges, "Mayelson", 10));
-        games.add(new Game("Jogo 2", "Este jogo, permite aos jogadores conherem os bares da ESTG", R.drawable.ic_launcher_foreground, challenges, "Mayelson", 20));
-        games.add(new Game("Jogo 3", "Este jogo permite aos jogadores conhecerem a Biblioteca José saramago", R.drawable.ic_launcher_foreground, challenges, "Mayelson", 5));*/
-
-    }
 
     public void buildRecycleView() {
         recyclerView = view.findViewById(R.id.rv_list_games);
@@ -75,6 +50,35 @@ public class GameFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new GameViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                startAddChallengeActivity(position);
+            }
+        });
+
+        adapter.setOnLongClickListener(new GameViewAdapter.OnLongClickListener() {
+            @Override
+            public void onItemLongClick(int position) {
+                removeGame(position);
+            }
+        });
+    }
+
+
+    public void removeGame(final int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameFragment.this.getContext());
+        builder.setMessage(R.string.message_delete_game)
+                .setTitle(R.string.delete_game_title);
+        builder.setPositiveButton(R.string.cancel, null);
+        builder.setNegativeButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                GamesManager.manager().removeGameAtPosition(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -82,8 +86,9 @@ public class GameFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_add :
             {
-                Intent intent = new Intent(getActivity(), AddGameActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), AddGameActivity.class);
+  //              startActivityForResult(intent, Constant.REQUEST_CODE);
+                startAddChallengeActivity(-1);
                 return true;
             }
             case R.id.action_search:
@@ -93,5 +98,24 @@ public class GameFragment extends Fragment {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.REQUEST_CODE && resultCode == dashboardActivity.RESULT_OK) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void startAddChallengeActivity(int position) {
+        Intent addActivity = new Intent(dashboardActivity.getApplicationContext(), AddGameActivity.class);
+
+        //if position is not -1, then we are editing
+        if (position != -1){
+            addActivity.putExtra(Constant.GAME_TO_EDIT, GamesManager.manager().getGames().get(position));
+            addActivity.putExtra(Constant.POSITION, position);
+        }
+        startActivityForResult(addActivity, Constant.REQUEST_CODE);
     }
 }

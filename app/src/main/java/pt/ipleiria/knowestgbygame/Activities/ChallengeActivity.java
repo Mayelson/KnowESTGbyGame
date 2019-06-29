@@ -193,7 +193,6 @@ public class ChallengeActivity extends AppCompatActivity {
         } else {
             timeLeft.setText(timeLeftText);
         }
-
     }
 
     public void nextChallenge() {

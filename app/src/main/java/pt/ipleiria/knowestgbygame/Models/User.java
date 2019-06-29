@@ -1,5 +1,6 @@
 package pt.ipleiria.knowestgbygame.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -8,18 +9,16 @@ public class User {
     private String email;
     private String avatar;
     private int points;
-    private  List<Challenge> challenges;
     private  List<Game> games;
     private String uid;
 
 
-    public User(String name, String email, String avatar, int points, List<Challenge> challenges, List<Game> games, String uid) {
+    public User(String name, String email, String avatar, String uid) {
         this.name = name;
         this.email = email;
         this.avatar = avatar;
-        this.points = points;
-        this.challenges = challenges;
-        this.games = games;
+        this.points = 0;
+        this.games = new ArrayList<>();
         this.uid = uid;
     }
 
@@ -53,14 +52,6 @@ public class User {
 
     public void setPoints(int points) {
         this.points = points;
-    }
-
-    public List<Challenge> getChallenges() {
-        return challenges;
-    }
-
-    public void setChallenges(List<Challenge> challenges) {
-        this.challenges = challenges;
     }
 
     public List<Game> getGames() {

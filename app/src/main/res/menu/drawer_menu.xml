@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dashboard"
-            android:icon="@drawable/ic_dashboard"
+            android:icon="@drawable/ic_home"
             android:title="@string/dashboard" />
 
         <item
@@ -16,7 +16,7 @@
 
         <item
             android:id="@+id/nav_challenge"
-            android:icon="@drawable/ic_challenge"
+            android:icon="@drawable/ic_extension_black"
             android:title="@string/challenges" />
 
         <item
@@ -28,11 +28,6 @@
     <item android:title="Outras">
         <menu>
             <item
-                android:id="@+id/nav_profile"
-                android:icon="@drawable/ic_profile"
-                android:title="@string/my_account" />
-
-            <item
                 android:id="@+id/nav_map"
                 android:icon="@drawable/ic_map"
                 android:title="@string/estg_map" />
@@ -41,6 +36,21 @@
                 android:id="@+id/nav_support"
                 android:icon="@drawable/ic_support"
                 android:title="@string/support" />
+        </menu>
+    </item>
+
+    <item android:title="Perfil">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_profile"
+                android:title="@string/my_account" />
+
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_logout"
+                android:title="logout" />
+
         </menu>
     </item>
 

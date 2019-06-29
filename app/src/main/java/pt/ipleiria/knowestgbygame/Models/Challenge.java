@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import pt.ipleiria.knowestgbygame.R;
 
@@ -33,12 +34,17 @@ public class Challenge implements Serializable {
     @SerializedName("Answer")
     private String answer;
 
+    @SerializedName("UUID")
+    private String uuid;
+
+
     public Challenge(String title, String description, long time, AnswerType answerType, long points) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.answerType = answerType;
         this.points = points;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public String getTitle() {
@@ -104,5 +110,13 @@ public class Challenge implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

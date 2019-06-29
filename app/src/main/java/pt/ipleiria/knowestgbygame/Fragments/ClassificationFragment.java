@@ -14,6 +14,7 @@ public class ClassificationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.classification);
         return inflater.inflate(R.layout.fragment_classification, container, false);
     }
 }

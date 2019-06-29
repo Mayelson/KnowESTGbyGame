@@ -30,9 +30,6 @@ public class GameActivity extends AppCompatActivity {
 
         //receive data
         Intent intent = getIntent();
-       /* String title = intent.getExtras().getString(Constant.CHALLENGE_TITLE);
-        int thumbnail = intent.getExtras().getInt(Constant.CHALLENGE_THUMB);
-        String description = intent.getExtras().getString(Constant.CHALLENGE_DESCRIPTION);*/
        game = (Game)intent.getSerializableExtra(Constant.GAME);
 
         //setting values

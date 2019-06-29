@@ -24,11 +24,7 @@ public class AllChallengeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
-        this.setTitle("Criar Novo Jogo");
 
-        textViewDesc = findViewById(R.id.editText_game_description);
-        imageGame = findViewById(R.id.img_game_thumbnail);
-        listViewChallenges = findViewById(R.id.listView_challenges_associated);
 
     }
 }

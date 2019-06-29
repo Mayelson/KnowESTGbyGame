@@ -31,12 +31,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2000"
+            android:text="Admin"
             android:textSize="15sp"
             android:layout_marginStart="8dp"
             android:layout_below="@+id/textView_title_game"
             android:layout_toEndOf="@+id/image_game_row"
-            android:id="@+id/textView_pontuation_game"/>
+            android:id="@+id/textView_createdBy_game"/>
 
     </RelativeLayout>
 

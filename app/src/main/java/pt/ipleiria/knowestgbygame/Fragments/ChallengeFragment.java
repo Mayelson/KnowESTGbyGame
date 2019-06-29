@@ -13,18 +13,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import pt.ipleiria.knowestgbygame.Activities.AddChallengeActivity;
-import pt.ipleiria.knowestgbygame.Activities.AddGameActivity;
-import pt.ipleiria.knowestgbygame.Activities.MainActivity;
+import pt.ipleiria.knowestgbygame.Activities.DashboardActivity;
 import pt.ipleiria.knowestgbygame.Adapters.ChallengeViewAdapter;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
-import pt.ipleiria.knowestgbygame.Helpers.HelperMethods;
-import pt.ipleiria.knowestgbygame.Models.AnswerType;
-import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.Models.ChallengesManager;
 import pt.ipleiria.knowestgbygame.R;
 
@@ -36,21 +29,20 @@ public class ChallengeFragment extends Fragment {
     private ChallengeViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private View view;
-    private MainActivity mainActivity;
+    private DashboardActivity dashboardActivity;
     private static final int REQUEST_CODE_ADD = 1;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_challenge, container, false);
-        mainActivity = (MainActivity) getActivity();
-
+        dashboardActivity = (DashboardActivity) getActivity();
+        dashboardActivity.setTitle(R.string.challenges);
         setHasOptionsMenu(true);
         buildRecycleView();
 
         return view;
     }
-
 
 
     public void buildRecycleView() {
@@ -79,8 +71,8 @@ public class ChallengeFragment extends Fragment {
 
     public void removeChallenge(final int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(ChallengeFragment.this.getContext());
-        builder.setMessage(R.string.message_delete_contact)
-                .setTitle(R.string.delete_contact_title);
+        builder.setMessage(R.string.message_delete_challenge)
+                .setTitle(R.string.delete_challenge_title);
         builder.setPositiveButton(R.string.cancel, null);
         builder.setNegativeButton(R.string.confirm, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -110,20 +102,13 @@ public class ChallengeFragment extends Fragment {
      @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_ADD && resultCode == mainActivity.RESULT_OK) {
-            //boolean editing = data.getIntExtra(AddActivity.POSITION,  -1);
+        if (requestCode == REQUEST_CODE_ADD && resultCode == dashboardActivity.RESULT_OK) {
             adapter.notifyDataSetChanged();
-           /* if (editing) {
-                //Challenge challenge = (Challenge)  data.getSerializableExtra(Constant.CHALLENGE_TO_ADD);
-                //ChallengesManager.manager().addChallengeAtPosition(0, challenge);
-            } else {
-
-            }*/
         }
     }
 
     public void startAddActivity(int position) {
-        Intent addActivity = new Intent(mainActivity.getApplicationContext(), AddChallengeActivity.class);
+        Intent addActivity = new Intent(dashboardActivity.getApplicationContext(), AddChallengeActivity.class);
 
         //if position is not -1, then we are editing
         if (position != -1){

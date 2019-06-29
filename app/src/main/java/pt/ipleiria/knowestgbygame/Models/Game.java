@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Game implements Serializable {
 
@@ -21,18 +22,20 @@ public class Game implements Serializable {
     private int score;
 
     @SerializedName("Challenges")
-    private List<Challenge> challenges;
+    private ArrayList<Challenge> challenges;
 
     @SerializedName("Created_by")
     private String created_by;
 
-    public Game(String title, String description, int thumbnail, List<Challenge> challenges, String created_by, int score) {
+    @SerializedName("UUID")
+    private String uuid;
+
+    public Game(String title, String description, ArrayList<Challenge> challenges, String created_by) {
         this.title = title;
         this.description = description;
-        this.thumbnail = thumbnail;
-        this.score = score;
         this.challenges = challenges;
         this.created_by = created_by;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public String getTitle() {
@@ -67,11 +70,11 @@ public class Game implements Serializable {
         this.score = score;
     }
 
-    public List<Challenge> getChallenges() {
+    public ArrayList<Challenge> getChallenges() {
         return challenges;
     }
 
-    public void setChallenges(List<Challenge> challenges) {
+    public void setChallenges(ArrayList<Challenge> challenges) {
         this.challenges = challenges;
     }
 
@@ -81,5 +84,13 @@ public class Game implements Serializable {
 
     public void setCreated_by(String created_by) {
         this.created_by = created_by;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

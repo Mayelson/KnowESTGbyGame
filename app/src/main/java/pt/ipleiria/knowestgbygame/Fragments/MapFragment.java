@@ -14,6 +14,7 @@ public class MapFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.estg_map);
         return inflater.inflate(R.layout.fragment_map_estg, container, false);
     }
 }

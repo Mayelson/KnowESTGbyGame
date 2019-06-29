@@ -14,15 +14,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <ImageView
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:id="@+id/img_challenge_thumbnail"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
             android:src="@drawable/ic_insert"
             android:onClick="btnPickImage"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escolher imagem"
+            android:textColor="@color/colorWhite"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:textSize="10sp"/>
 
         <EditText
             android:id="@+id/editText_challenge_title"
@@ -63,39 +70,30 @@
         <EditText
             android:id="@+id/editText_challenge_description"
             android:hint="Descrição"
-            android:minHeight="150dp"
             android:padding="10dp"
             android:gravity="top"
-            android:inputType="textCapSentences"
+            android:inputType="textMultiLine"
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13sp"
             android:imeOptions="actionDone"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:lines="3"/>
 
         <EditText
             android:id="@+id/editText_challenge_sugestion"
             android:hint="Dica para o desafio (opcional)"
-            android:minHeight="150dp"
             android:padding="10dp"
             android:gravity="top"
-            android:inputType="textCapSentences"
+            android:inputType="textMultiLine"
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13sp"
             android:imeOptions="actionDone"
-            android:layout_marginBottom="10dp"/>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_answerType"
-        android:background="@drawable/rounded_corner"
-        android:minHeight="36dp"
-        android:layout_marginBottom="10dp"/>
-
+            android:layout_marginBottom="10dp"
+            android:lines="3"/>
 
         <EditText
             android:id="@+id/editText_challenge_answer"
@@ -106,11 +104,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="10dp"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_answerType"
+            android:background="@drawable/rounded_corner"
+            android:minHeight="36dp"/>
+
 
         <Button
             android:id="@+id/btn_create_new_challenge"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/rounded_btn"
             android:layout_centerHorizontal="true"

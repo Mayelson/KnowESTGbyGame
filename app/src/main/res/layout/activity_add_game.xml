@@ -20,9 +20,17 @@
             android:layout_height="90dp"
             android:id="@+id/img_game_thumbnail"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
             android:src="@drawable/ic_insert"
             android:onClick="btnPickImage"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escolher imagem"
+            android:textColor="@color/colorWhite"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:textSize="10sp"/>
 
         <EditText
             android:id="@+id/editText_game_title"
@@ -53,22 +61,26 @@
         <Button
             android:id="@+id/btn_add_challenge"
             android:layout_width="170dp"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:background="@drawable/rounded_btn"
             android:layout_centerHorizontal="true"
             android:text="Associar Desafios"
             android:textColor="@color/colorWhite"
-            android:onClick="btnAssociateChallenge"/>
+            android:onClick="btnAssociateChallenge"
+            android:textSize="13sp"/>
 
-        <ListView
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:id="@+id/listView_challenges_associated"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/selected_challenges"
+            android:background="@drawable/rounded_corner"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"/>
 
         <Button
-            android:id="@+id/btn_to_answer"
-            android:layout_width="150dp"
+            android:id="@+id/btn_create_new_game"
+            android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/rounded_btn"
             android:layout_centerHorizontal="true"
@@ -76,6 +88,6 @@
             android:textColor="@color/colorWhite"
             android:layout_gravity="center_horizontal"
             android:onClick="btnNewGame"
-            android:layout_marginTop="130dp"/>
+            android:layout_marginTop="30dp"/>
     </LinearLayout>
 </ScrollView>

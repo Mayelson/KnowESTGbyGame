@@ -31,6 +31,7 @@ public class DashboardFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         buildRecycleView();
         setHasOptionsMenu(true);
+        getActivity().setTitle(R.string.app_name);
 
         return view;
     }

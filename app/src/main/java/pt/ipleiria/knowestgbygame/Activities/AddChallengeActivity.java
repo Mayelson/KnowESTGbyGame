@@ -1,15 +1,24 @@
 package pt.ipleiria.knowestgbygame.Activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
 import pt.ipleiria.knowestgbygame.Helpers.HelperMethods;
@@ -72,6 +81,7 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
             //imageGame.setText(challenge.getTitle());
 
         }
+
     }
 
     public void populateSpinner() {
@@ -84,33 +94,23 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-       // category = parent.getItemAtPosition(position).toString();
-        //Toast.makeText(this,sSelected,Toast.LENGTH_SHORT).show();
-
-    }
+      }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     public void btnPickImage(View view) {
-
+        HelperMethods.optionToChoosePicture(this);
     }
 
-
-
-    public void btnAssociateChallenge(View view) {
-        //Intent intent = new Intent(this, ChallengeFragment.class);
-        //startActivity(intent);
-    }
 
     public void btnNewChallenge(View view) {
         //get data from form
         String title = editTextTitle.getText().toString();
-        long points = Integer.parseInt(editTextScore.getText().toString());
-        long time = Long.parseLong(editTextTime.getText().toString());
         String description = editTextDesc.getText().toString();
+        long points = Long.parseLong(editTextScore.getText().toString());
+        long time = Long.parseLong(editTextTime.getText().toString());
         String suggestion = editTextSuggestion.getText().toString();
         String answer = editTextAnswer.getText().toString();
         AnswerType answerType = HelperMethods.getCategory(spinnerAnswerType.getSelectedItemPosition());
@@ -129,9 +129,7 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
 
         } else {
             challenge = new Challenge(title, description, time, answerType, points);
-            //returnIntent.putExtra(Constant.CHALLENGE_TO_ADD, challenge);
             ChallengesManager.manager().addChallengeAtPosition(0, challenge);
-
         }
 
         if (!suggestion.isEmpty()){
@@ -144,18 +142,22 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
             ChallengesManager.manager().getChallenges().get(pos).setThumbnail(thumb);
         }
 
-
-
-
-
         //returnIntent.putExtra(Constant.CHALLENGE_TO_ADD, challenge);
         setResult(RESULT_OK, returnIntent);
         finish();
     }
 
-
-    public void setDataFromForm() {
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //get result of image
+        if (requestCode == Constant.GALLERY_IMAGE_REQUEST && resultCode == this.RESULT_OK && data != null) {
+            //uploadImage(data.getData());
+            Toast.makeText(this, "Imagem da biblioteca carregada com suceeso", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == Constant.CAMERA_IMAGE_REQUEST && resultCode == this.RESULT_OK) {
+            Uri photoUri = FileProvider.getUriForFile(this, this.getPackageName() + ".provider", HelperMethods.getCameraFile(this));
+            Toast.makeText(this, "Imagem da camera carregada com suceeso", Toast.LENGTH_SHORT).show();
+            //uploadImage(photoUri);
+        }
     }
-
 }

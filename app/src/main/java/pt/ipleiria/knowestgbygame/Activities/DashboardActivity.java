@@ -11,7 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipleiria.knowestgbygame.Fragments.ChallengeFragment;
 import pt.ipleiria.knowestgbygame.Fragments.ClassificationFragment;
@@ -20,23 +21,27 @@ import pt.ipleiria.knowestgbygame.Fragments.GameFragment;
 import pt.ipleiria.knowestgbygame.Fragments.MapFragment;
 import pt.ipleiria.knowestgbygame.Fragments.ProfileFragment;
 import pt.ipleiria.knowestgbygame.Fragments.SupportFragment;
-import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.R;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
+public class DashboardActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dashboard);
+
+        mAuth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -47,7 +52,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_dashboard);
         }
+
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -73,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             case R.id.nav_challenge:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChallengeFragment()).commit();
                 break;
+                case R.id.logout:
+                    mAuth.signOut();
+                    Intent activityIntent;
+                    activityIntent = new Intent(this, LoginActivity.class);
+                    startActivity(activityIntent);
+                    finish();
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -88,11 +103,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         }
     }
 
-    //metodo chamado kd o menu está ser executado
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 }

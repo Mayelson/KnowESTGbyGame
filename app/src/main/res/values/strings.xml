@@ -26,10 +26,24 @@
     <string name="image_picker_error">Algo está errado com essa imagem. Escolha uma diferente por favor.</string>
     <string name="img_loaded">Imagem carregada com sucesso!</string>
     <string name="new_challenge">Criar Novo Desafio</string>
-    <string name="message_delete_contact">Tem a certeza que pretende eliminar o desafio?</string>
-    <string name="delete_contact_title">Eliminar Desafio</string>
+    <string name="message_delete_challenge">Tem a certeza que pretende eliminar o desafio?</string>
+    <string name="delete_challenge_title">Eliminar Desafio</string>
+    <string name="delete_game_title">Eliminar Jogo</string>
     <string name="cancel">cancelar</string>
     <string name="edit">Editar</string>
+    <string name="clear_all_label">Limpar</string>
     <string name="edit_challenge">Editar desafio</string>
+    <string name="OK">OK</string>
+    <string name="edit_game">Editar Jogo</string>
+    <string name="message_delete_game">Tem a certeza que pretende eliminar o jogo?</string>
+    <string name="already_registered">Erro ao registar</string>
+    <string name="already_registered_message">Este email ja se encontra registrado</string>
+    <string name="required_name">Nome é obrigatório</string>
+    <string name="required_email">Email obrigatório</string>
+    <string name="invalid_email">Por favor, insira um email válido</string>
+    <string name="required_password">Password é obrigatória</string>
+    <string name="invalid_password">Password deve conter mais de 6 caracteres</string>
+    <string name="games_played">Jogos efetuados</string>
+
 
 </resources>

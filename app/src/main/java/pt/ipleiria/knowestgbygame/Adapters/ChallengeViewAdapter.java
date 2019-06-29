@@ -1,6 +1,7 @@
 package pt.ipleiria.knowestgbygame.Adapters;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,7 @@ public class ChallengeViewAdapter extends RecyclerView.Adapter <ChallengeViewAda
         Challenge currentChallenge = challengesList.get(position);
         challengeViewHolder.challengeImage.setImageResource(currentChallenge.getThumbnail());
         challengeViewHolder.title.setText(currentChallenge.getTitle());
-
+        challengeViewHolder.points.setText(Long.toString(currentChallenge.getPoints())+ " pts");
     }
 
     @Override
@@ -66,13 +67,14 @@ public class ChallengeViewAdapter extends RecyclerView.Adapter <ChallengeViewAda
     public static class ChallengeViewHolder extends  RecyclerView.ViewHolder {
 
         public ImageView challengeImage;
-        public TextView title;
+        public TextView title, points;
 
 
         public ChallengeViewHolder(@NonNull View itemView, final OnItemClickListener clickListener, final OnLongClickListener longClickListener) {
             super(itemView);
             challengeImage = itemView.findViewById(R.id.image_challenge_row);
             title = itemView.findViewById(R.id.textView_title_challenge);
+            points = itemView.findViewById(R.id.textView_pontuation_challenge);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

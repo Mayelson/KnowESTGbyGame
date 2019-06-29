@@ -13,10 +13,10 @@ public class ChallengesManager {
 
     private ArrayList<Challenge> challenges;
 
+
     private ChallengesManager() {
         challenges = new ArrayList<>();
         buildExemplesChallenges();
-
     }
 
     private void buildExemplesChallenges() {
@@ -29,6 +29,10 @@ public class ChallengesManager {
         challenges.add(new Challenge("Bares da ESTG", "Quantos Bares têm a ESTG?", 30000, AnswerType.NUMBER, 30));
         challenges.add(new Challenge("Cursos ESTG 2019", "Quantos cursos têm na ESTG este Ano?", 60000, AnswerType.NUMBER, 20));
         challenges.add(new Challenge("Departamentos ESTG", "Quantos departamentos tem a ESTG?", 60000, AnswerType.NUMBER, 100));
+        for (Challenge challenge: challenges) {
+            challenge.setThumbnail(R.drawable.ic_extension_black);
+        }
+
     }
 
     public void addChallenge(Challenge challenge) {
@@ -51,5 +55,28 @@ public class ChallengesManager {
 
     public void removeChallengeAtPosition(int position) {
         challenges.remove(position);
+    }
+
+    public String[] getChallengsNames() {
+        String[] challengesTitle = new String[challenges.size()];
+        for (int i = 0; i < challenges.size(); i++) {
+            challengesTitle[i] = challenges.get(i).getTitle();
+        }
+        return challengesTitle;
+    }
+
+
+
+
+    public  ArrayList<Integer> getPositionOfSelectedsChallengs(ArrayList<Challenge> challengesInCurrentGame){
+        ArrayList<Integer> positions = new ArrayList<>();
+        for (int i = 0; i < challengesInCurrentGame.size(); i++) {
+            for (int position = 0; position < challenges.size(); position++) {
+                if (challenges.get(position).getUuid().equalsIgnoreCase(challengesInCurrentGame.get(i).getUuid())){
+                    positions.add(position);
+                }
+            }
+        }
+        return positions;
     }
 }
