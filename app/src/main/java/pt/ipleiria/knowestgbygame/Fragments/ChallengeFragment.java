@@ -9,15 +9,21 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import java.util.ArrayList;
 
 import pt.ipleiria.knowestgbygame.Activities.AddChallengeActivity;
 import pt.ipleiria.knowestgbygame.Activities.DashboardActivity;
 import pt.ipleiria.knowestgbygame.Adapters.ChallengeViewAdapter;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
+import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.Models.ChallengesManager;
 import pt.ipleiria.knowestgbygame.R;
 
@@ -31,17 +37,47 @@ public class ChallengeFragment extends Fragment {
     private View view;
     private DashboardActivity dashboardActivity;
     private static final int REQUEST_CODE_ADD = 1;
+    private EditText editTextSearch;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_challenge, container, false);
+
+        editTextSearch = view.findViewById(R.id.editText_search);
         dashboardActivity = (DashboardActivity) getActivity();
         dashboardActivity.setTitle(R.string.challenges);
         setHasOptionsMenu(true);
         buildRecycleView();
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
         return view;
+    }
+
+
+    private void filter(String keyword){
+        ArrayList<Challenge> filteredLis = new ArrayList<>();
+
+        for (Challenge challenge: ChallengesManager.manager().getChallenges()) {
+            if (challenge.getTitle().toLowerCase().contains(keyword.toLowerCase())){
+                filteredLis.add(challenge);
+            }
+        }
+        adapter.filterList(filteredLis);
     }
 
 
@@ -92,6 +128,11 @@ public class ChallengeFragment extends Fragment {
             }
             case R.id.action_search: {
                 //Write here what to do you on click
+                if (editTextSearch.getVisibility() == View.VISIBLE ){
+                    editTextSearch.setVisibility(View.GONE);
+                } else {
+                    editTextSearch.setVisibility(View.VISIBLE);
+                }
                 return true;
             }
         }

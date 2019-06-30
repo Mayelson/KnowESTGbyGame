@@ -45,9 +45,9 @@ public class NumberFragment extends Fragment {
                     return;
                 }
                 number = Integer.parseInt(text);
-                Toast.makeText(NumberFragment.this.getContext(), "Resposta enviada " + number, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(NumberFragment.this.getContext(), "Resposta enviada " + number, Toast.LENGTH_SHORT).show();
                 closeKeyboard();
-                challengeActivity.getAnswer("", number, AnswerType.NUMBER);
+                challengeActivity.getAnswer(Integer.toString(number));
                 //TODO
                 //verify if number is equal to possible answer
 

@@ -7,6 +7,7 @@ public class Constant {
     public static final String CHALLENGE_THUMB = "challenge_thumb";
     public static final String CHALLENGE_DESCRIPTION = "challenge_description";
     public static final String GAME = "GAME";
+    public static final String GAME_UUID = "GAME_UUID";
     public static final String CHALLENGE = "CHALLENGE";
     public static final String POSITION = "POSITION";
     public static final String CHALLENGE_TO_EDIT = "CHALLENGE_TO_EDIT";

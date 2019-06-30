@@ -10,4 +10,6 @@ public enum AnswerType {
     DECIMALNUMBER,
     FITRUN,
     OBJECTDETECTION,
+    LOGODETECTION,
+    FACEDETECTION
 }

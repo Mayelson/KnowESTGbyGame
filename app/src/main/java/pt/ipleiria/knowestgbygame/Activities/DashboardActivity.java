@@ -2,6 +2,7 @@ package pt.ipleiria.knowestgbygame.Activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +12,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipleiria.knowestgbygame.Fragments.ChallengeFragment;
@@ -21,6 +26,7 @@ import pt.ipleiria.knowestgbygame.Fragments.GameFragment;
 import pt.ipleiria.knowestgbygame.Fragments.MapFragment;
 import pt.ipleiria.knowestgbygame.Fragments.ProfileFragment;
 import pt.ipleiria.knowestgbygame.Fragments.SupportFragment;
+import pt.ipleiria.knowestgbygame.Models.SessionManager;
 import pt.ipleiria.knowestgbygame.R;
 
 public class DashboardActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
@@ -28,6 +34,9 @@ public class DashboardActivity extends AppCompatActivity implements  NavigationV
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private FirebaseAuth mAuth;
+    private TextView points, games_played, profileName, profileEmail;
+    private ImageView img_profile;
+    private View header;
 
 
     @Override
@@ -43,6 +52,20 @@ public class DashboardActivity extends AppCompatActivity implements  NavigationV
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        header = navigationView.getHeaderView(0);
+
+        profileEmail = header.findViewById(R.id.textView_email_address);
+        profileName = header.findViewById(R.id.textView_profile_name);
+        img_profile =  header.findViewById(R.id.img_profile);
+
+        profileName.setText(SessionManager.manager().getUser().getName());
+        profileName.setText(SessionManager.manager().getUser().getName());
+        if (SessionManager.manager().getUser().getAvatar() != null){
+            Glide.with(this)
+                    .load(SessionManager.manager().getUser().getAvatar())
+                    .into(img_profile);
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -108,4 +131,5 @@ public class DashboardActivity extends AppCompatActivity implements  NavigationV
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 }

@@ -9,10 +9,10 @@
     <string name="my_account">Minha conta</string>
     <string name="estg_map">Mapa da ESTG</string>
     <string name="support">Suporte</string>
-    <string name="game_title">Game Title</string>
-    <string name="description">Description</string>
-    <string name="challenge_title">Challenge Title</string>
-    <string name="soluction">Solução</string>
+    <string name="game_title">Título do jogo</string>
+    <string name="description">Descrição</string>
+    <string name="challenge_title">Desafios</string>
+    <string name="sugestion">Dica</string>
     <string name="close">Fechar</string>
     <string name="confirm">Confirmar</string>
     <string name="game_end">Fim do Jogo</string>
@@ -44,6 +44,7 @@
     <string name="required_password">Password é obrigatória</string>
     <string name="invalid_password">Password deve conter mais de 6 caracteres</string>
     <string name="games_played">Jogos efetuados</string>
+    <string name="user_updated">Perfil atualizado</string>
 
 
 </resources>

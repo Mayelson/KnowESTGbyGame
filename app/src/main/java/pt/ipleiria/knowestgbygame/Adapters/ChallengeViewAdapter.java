@@ -64,6 +64,11 @@ public class ChallengeViewAdapter extends RecyclerView.Adapter <ChallengeViewAda
     }
 
 
+    public void filterList(ArrayList<Challenge> filteredList){
+        challengesList = filteredList;
+        notifyDataSetChanged();
+    }
+
     public static class ChallengeViewHolder extends  RecyclerView.ViewHolder {
 
         public ImageView challengeImage;

@@ -3,6 +3,7 @@ package pt.ipleiria.knowestgbygame.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import pt.ipleiria.knowestgbygame.Helpers.HelperMethods;
+import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.Models.Game;
 import pt.ipleiria.knowestgbygame.Activities.GameActivity;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
+import pt.ipleiria.knowestgbygame.Models.SessionManager;
 import pt.ipleiria.knowestgbygame.R;
 
 public class DashboardViewAdapter extends RecyclerView.Adapter<DashboardViewAdapter.MyViewHolder> {
@@ -42,20 +47,25 @@ public class DashboardViewAdapter extends RecyclerView.Adapter<DashboardViewAdap
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
         myViewHolder.title.setText(games.get(position).getTitle());
         myViewHolder.img_thumbnail.setImageResource(games.get(position).getThumbnail());
-
+        if (SessionManager.manager().getUser().alreadyPlayed(games.get(position))){
+            myViewHolder.img_thumbnail.setBackgroundColor(mContext.getResources().getColor(R.color.colorGreen));
+        }
 
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, GameActivity.class);
-                //passing data to the challenge activity
-               /* intent.putExtra(Constant.CHALLENGE_TITLE, games.get(position).getTitle());
-                intent.putExtra(Constant.CHALLENGE_THUMB, games.get(position).getThumbnail());
-                intent.putExtra(Constant.CHALLENGE_DESCRIPTION, games.get(position).getDescription());*/
+                if (SessionManager.manager().getUser().alreadyPlayed(games.get(position))){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("Jogo concluído!").setMessage("Este jogo ja foi jogado!");
+                    builder.setPositiveButton (R.string.close, null);
+                    builder.show();
+                } else {
+                    Intent intent = new Intent(mContext, GameActivity.class);
+                    intent.putExtra(Constant.GAME_UUID, games.get(position).getUuid());
+                    //start the activity
+                    mContext.startActivity(intent);
+                }
 
-               intent.putExtra(Constant.GAME, games.get(position));
-                //start the activity
-                mContext.startActivity(intent);
             }
         });
     }
@@ -64,7 +74,6 @@ public class DashboardViewAdapter extends RecyclerView.Adapter<DashboardViewAdap
     public int getItemCount() {
         return games.size();
     }
-
 
 
     public static class MyViewHolder extends  RecyclerView.ViewHolder {

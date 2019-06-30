@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -34,9 +38,11 @@ import com.google.api.services.vision.v1.Vision;
 import com.google.api.services.vision.v1.VisionRequest;
 import com.google.api.services.vision.v1.VisionRequestInitializer;
 import com.google.api.services.vision.v1.model.AnnotateImageRequest;
+import com.google.api.services.vision.v1.model.AnnotateImageResponse;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
 import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
+import com.google.api.services.vision.v1.model.FaceAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
@@ -46,6 +52,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import pt.ipleiria.knowestgbygame.Activities.ChallengeActivity;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
@@ -72,7 +79,6 @@ public class LabelFragment extends Fragment {
         btnAnswer = view.findViewById(R.id.btn_to_answer);
         imgResult = view.findViewById(R.id.img_result);
         infoTextView = view.findViewById(R.id.label_info);
-
 
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +117,43 @@ public class LabelFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void detetcLogo(Uri uri){
+        infoTextView.setText(R.string.loading_message);
+        try {
+            // scale the image to save on bandwidth
+            Bitmap bitmap = scaleBitmapDown(MediaStore.Images.Media.getBitmap(challengeActivity.getContentResolver(), uri), Constant.MAX_DIMENSION);
+
+            TextRecognizer textRecognizer = new TextRecognizer.Builder(challengeActivity).build();
+
+            if (!textRecognizer.isOperational()){
+                Toast.makeText(challengeActivity, "Não é possível obter o Texto! Tente novamente mais", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                SparseArray<TextBlock> items = textRecognizer.detect(frame);
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                for (int i = 0; i < items.size(); ++i) {
+                    stringBuilder.append(items.valueAt(i).getValue()+"\n");
+                }
+
+                System.out.println(stringBuilder.toString());
+                challengeActivity.getAnswer(stringBuilder.toString());
+                //Toast.makeText(challengeActivity, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
+                imgResult.setImageBitmap(bitmap);
+                btnAnswer.setVisibility(View.INVISIBLE);
+                infoTextView.setText(challengeActivity.getString(R.string.img_loaded));
+            }
+        } catch (IOException e) {
+            Log.d(Constant.TAG, "Image picking failed because " + e.getMessage());
+            Toast.makeText(LabelFragment.this.getContext(), R.string.image_picker_error, Toast.LENGTH_LONG).show();
+        }
+
+
+
     }
 
     public void startGalleryChooser() {
@@ -158,12 +201,18 @@ public class LabelFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+       Uri uri = null;
         //get result of image
         if (requestCode == Constant.GALLERY_IMAGE_REQUEST && resultCode == challengeActivity.RESULT_OK && data != null) {
-            uploadImage(data.getData());
+            uri = data.getData();
         } else if (requestCode == Constant.CAMERA_IMAGE_REQUEST && resultCode == challengeActivity.RESULT_OK) {
-            Uri photoUri = FileProvider.getUriForFile(LabelFragment.this.getContext(), challengeActivity.getPackageName() + ".provider", getCameraFile());
-            uploadImage(photoUri);
+            uri = FileProvider.getUriForFile(LabelFragment.this.getContext(), challengeActivity.getPackageName() + ".provider", getCameraFile());
+        }
+
+        if (challengeActivity.currentAnseAnswerType() == AnswerType.LOGODETECTION){
+            detetcLogo(uri);
+        } else {
+            uploadImage(uri);
         }
     }
 
@@ -249,28 +298,42 @@ public class LabelFragment extends Fragment {
         protected void onPostExecute(String result) {
             ChallengeActivity activity = challengeAtivityWeakReference.get();
             if (activity != null && !activity.isFinishing()) {
-                activity.getAnswer(result, 0, AnswerType.OBJECTDETECTION);
+                activity.getAnswer(result);
                 TextView imageDetail = activity.findViewById(R.id.label_info);
                 imageDetail.setText(activity.getString(R.string.img_loaded));
             }
         }
 
         private static String convertResponseToString(BatchAnnotateImagesResponse response) {
+            String ms = "";
             StringBuilder message = new StringBuilder("I found these things:\n\n");
-
             List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
-            if (labels != null) {
+
+            List<FaceAnnotation> faceAnnotations = response.getResponses().get(0).getFaceAnnotations();
+
+            if (faceAnnotations != null) {
+                for (FaceAnnotation annotation : faceAnnotations) {
+                    ms += String.format("raiva:%s sorriso:%s supresa:%s chapeu:%s",
+                            annotation.getAngerLikelihood(),
+                            annotation.getJoyLikelihood(),
+                            annotation.getSurpriseLikelihood(),
+                            annotation.getHeadwearLikelihood());
+
+                   // ms += String.format(annotation.getJoyLikelihood());
+                }
+                System.out.println(ms);
+                return ms;
+            } else if (labels != null) {
                 for (EntityAnnotation label : labels) {
                     //message.append(String.format(Locale.US, "%.3f: %s", label.getScore(), label.getDescription()));
                     message.append(String.format(label.getDescription()));
                     message.append(":");
-                    
                 }
-            } else {
-                message.append("nothing");
+                System.out.println(ms);
+                return message.toString();
             }
-            Log.d(TAG, "message: " + message.toString());
-            return message.toString();
+
+            return "nothing";
         }
     }
 
@@ -321,12 +384,18 @@ public class LabelFragment extends Fragment {
             annotateImageRequest.setImage(base64EncodedImage);
 
             // add the features we want
-            annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
+      /*      annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
                 Feature labelDetection = new Feature();
                 labelDetection.setType("LABEL_DETECTION");
                 labelDetection.setMaxResults(Constant.MAX_LABEL_RESULTS);
                 add(labelDetection);
-            }});
+            }});*/
+
+            if (challengeActivity.currentAnseAnswerType() == AnswerType.FACEDETECTION){
+                annotateImageRequest = addFaceDetection(annotateImageRequest);
+            } else {
+                annotateImageRequest = addLabelDetection(annotateImageRequest);
+            }
 
             // Add the list of one thing to the request
             add(annotateImageRequest);
@@ -341,25 +410,52 @@ public class LabelFragment extends Fragment {
         return annotateRequest;
     }
 
-   /* public  void getTextFromImagw(View v) {
-        Bitmap bitmap = BitmapFactory.decodeResource(challengeActivity.getApplicationContext().getResources(), R.drawable.ipl_estg_logo);
-        TextRecognizer textRecognizer = new TextRecognizer().Builder(challengeActivity.getApplicationContext()).build();
 
-        if (!textRecognizer.isOperational()) {
-            Toast.makeText(challengeActivity, "Could not get the Text", Toast.LENGTH_SHORT).show();
-        } else {
-            Frame frame = new Frame().Builder().setBipmap(bitmap).build();
-            SparseArray<TextBlock> items = textRecognizer.detect(frame);
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < items.size(); ++i) {
-                TextBlock myItem = items.valueAt(i);
-                stringBuilder.append(myItem.getValue());
-                stringBuilder.append("\n");
-            }
+    public AnnotateImageRequest addLabelDetection( AnnotateImageRequest annotateImageRequest){
+        annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
+            Feature labelDetection = new Feature();
+            labelDetection.setType("LABEL_DETECTION");
+            labelDetection.setMaxResults(Constant.MAX_LABEL_RESULTS);
+            add(labelDetection);
+        }});
 
-            Toast.makeText(challengeActivity, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
-        }
+        return annotateImageRequest;
     }
-*/
 
+
+    public AnnotateImageRequest addFaceDetection( AnnotateImageRequest annotateImageRequest){
+        annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
+            Feature faceDetection = new Feature();
+            faceDetection.setType("FACE_DETECTION");
+            faceDetection.setMaxResults(10);
+            add(faceDetection);
+        }});
+
+        return annotateImageRequest;
+    }
+
+
+    // TODO: analyse this method to understand how to get Cloud Vision data
+    private String convertResponseToString(BatchAnnotateImagesResponse response) {
+        String message = "";
+        List<EntityAnnotation> annotations;
+        AnnotateImageResponse annotateImageResponse = response.getResponses().get(0);
+
+        message += "\n___\n# FACES\n";
+        List<FaceAnnotation> faceAnnotations = annotateImageResponse.getFaceAnnotations();
+        if (faceAnnotations != null) {
+            for (FaceAnnotation annotation : faceAnnotations) {
+                message += String.format(Locale.US, "> position:%s anger:%s joy:%s surprise:%s headwear:%s \n",
+                        annotation.getBoundingPoly(),
+                        annotation.getAngerLikelihood(),
+                        annotation.getJoyLikelihood(),
+                        annotation.getSurpriseLikelihood(),
+                        annotation.getHeadwearLikelihood());
+            }
+        } else {
+            message += "nothing\n";
+        }
+
+        return message;
+    }
 }

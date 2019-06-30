@@ -51,11 +51,11 @@ public class TextFragment extends Fragment {
                     Toast.makeText(TextFragment.this.getContext(), "Deve preencher o campo da resposta", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Toast.makeText(TextFragment.this.getContext(), "Resposta enviada: " + answer, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(TextFragment.this.getContext(), "Resposta enviada: " + answer, Toast.LENGTH_SHORT).show();
 
                 closeKeyboard();
 
-                challengeActivity.getAnswer(answer, 0, AnswerType.TEXT);
+                challengeActivity.getAnswer(answer);
 
                 //TODO
                 //verify if answer is equal to possible answer

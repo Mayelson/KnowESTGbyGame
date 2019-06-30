@@ -9,16 +9,15 @@ public class User {
     private String email;
     private String avatar;
     private int points;
-    private  List<Game> games;
+    private  List<Game> gamesPlayeds;
     private String uid;
 
 
-    public User(String name, String email, String avatar, String uid) {
+    public User(String name, String email, String uid) {
         this.name = name;
         this.email = email;
-        this.avatar = avatar;
         this.points = 0;
-        this.games = new ArrayList<>();
+        this.gamesPlayeds = new ArrayList<>();
         this.uid = uid;
     }
 
@@ -54,12 +53,12 @@ public class User {
         this.points = points;
     }
 
-    public List<Game> getGames() {
-        return games;
+    public List<Game> getGamesPlayeds() {
+        return gamesPlayeds;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
+    public void setGamesPlayeds(List<Game> games) {
+        this.gamesPlayeds = games;
     }
 
     public String getUid() {
@@ -68,5 +67,20 @@ public class User {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+
+    public void addGamePlayed(Game game){
+        gamesPlayeds.add(game);
+    }
+
+    public boolean alreadyPlayed(Game game){
+        return  gamesPlayeds.contains(game) ? true : false;
+     /*   for (Game g: gamesPlayeds) {
+            if (g.getUuid() == game.getUuid()){
+                return true;
+            }
+        }
+        return false;*/
     }
 }

@@ -8,7 +8,16 @@
         <item>QRCode</item>
         <item>Deteção de Objecto</item>
         <item>Deteção de Logo</item>
+        <item>Deteção de Face</item>
         <item>Atividade (andar/correr)</item>
+    </string-array>
+
+    <string-array name="answers">
+        <item>Escolha uma resposta</item>
+        <item>Alegria</item>
+        <item>Supresa</item>
+        <item>Chapéu</item>
+        <item>Raiva</item>
     </string-array>
 
 </resources>

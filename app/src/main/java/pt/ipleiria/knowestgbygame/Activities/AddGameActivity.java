@@ -1,37 +1,28 @@
 package pt.ipleiria.knowestgbygame.Activities;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import pt.ipleiria.knowestgbygame.Fragments.ChallengeFragment;
-import pt.ipleiria.knowestgbygame.Fragments.DashboardFragment;
-import pt.ipleiria.knowestgbygame.Fragments.LabelFragment;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
 import pt.ipleiria.knowestgbygame.Helpers.HelperMethods;
-import pt.ipleiria.knowestgbygame.Helpers.PermissionUtils;
 import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.Models.ChallengesManager;
 import pt.ipleiria.knowestgbygame.Models.Game;
 import pt.ipleiria.knowestgbygame.Models.GamesManager;
+import pt.ipleiria.knowestgbygame.Models.SessionManager;
 import pt.ipleiria.knowestgbygame.R;
 
 public class AddGameActivity extends AppCompatActivity {
@@ -40,7 +31,7 @@ public class AddGameActivity extends AppCompatActivity {
     private ImageView imageGame;
     private Game game;
     private Button btnCreateGame;
-    private TextView seletectedChallenges;
+    private TextView selectedChallenges;
     private int position;
 
     String[] listItems;
@@ -56,7 +47,7 @@ public class AddGameActivity extends AppCompatActivity {
         editTextTitle  = findViewById(R.id.editText_game_title);
         editTextDesc = findViewById(R.id.editText_game_description);
         imageGame = findViewById(R.id.img_game_thumbnail);
-        seletectedChallenges = findViewById(R.id.selected_challenges);
+        selectedChallenges = findViewById(R.id.selected_challenges);
         btnCreateGame = findViewById(R.id.btn_create_new_game);
 
         listItems = ChallengesManager.manager().getChallengsNames();
@@ -104,9 +95,19 @@ public class AddGameActivity extends AppCompatActivity {
 
         String title = editTextTitle.getText().toString();
         String description = editTextDesc.getText().toString();
-        int thumb =  R.drawable.ic_challenge;
+        int thumb =  R.drawable.ic_launcher_foreground;
         Intent returnIntent = new Intent();
         int pos = 0;
+        if (title.isEmpty()) {
+            editTextTitle.setError("Título é obrigatório");
+            editTextTitle.requestFocus();
+            return;
+        }
+        if (description.isEmpty()) {
+            editTextDesc.setError("Descrição é obrigatório");
+            editTextDesc.requestFocus();
+            return;
+        }
 
         if (game != null) {
             GamesManager.manager().getGames().get(position).setTitle(title);
@@ -115,12 +116,12 @@ public class AddGameActivity extends AppCompatActivity {
             pos = position;
 
         } else {
-            game = new Game(title, description, getSelectedsChallenges(),"Admin");
+            game = new Game(title, description, getSelectedsChallenges(), SessionManager.manager().getUser().getName());
             GamesManager.manager().addGameAtPosition(0, game);
         }
 
         if (thumb > 0) {
-            ChallengesManager.manager().getChallenges().get(pos).setThumbnail(thumb);
+            GamesManager.manager().getGames().get(pos).setThumbnail(thumb);
         }
 
         setResult(RESULT_OK, returnIntent);
@@ -142,7 +143,7 @@ public class AddGameActivity extends AppCompatActivity {
                 } else{
                     mUserItems.remove((Integer.valueOf(position)));
                     if (mUserItems.size() <= 0) {
-                        seletectedChallenges.setVisibility(View.GONE);
+                        selectedChallenges.setVisibility(View.GONE);
                     }
                 }
             }
@@ -162,7 +163,7 @@ public class AddGameActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int which) {
                 for (int i = 0; i < checkedItems.length; i++) {
                     checkedItems[i] = false;
-                    seletectedChallenges.setVisibility(View.GONE);
+                    selectedChallenges.setVisibility(View.GONE);
                     mUserItems.clear();
                     dialogInterface.dismiss();
                 }
@@ -191,9 +192,9 @@ public class AddGameActivity extends AppCompatActivity {
                 item = item + "\n\n";
             }
         }
-        seletectedChallenges.setText(item);
+        selectedChallenges.setText(item);
         if (mUserItems.size() > 0) {
-            seletectedChallenges.setVisibility(View.VISIBLE);
+            selectedChallenges.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -59,7 +59,7 @@
             android:id="@+id/editText_challenge_time"
             android:hint="Tempo em segundos (1min = 60seg)"
             android:padding="10dp"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,25 +95,34 @@
             android:layout_marginBottom="10dp"
             android:lines="3"/>
 
-        <EditText
-            android:id="@+id/editText_challenge_answer"
-            android:hint="Resposta esperada"
-            android:padding="10dp"
-            android:inputType="text"
-            android:background="@drawable/rounded_corner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:imeOptions="actionDone"
-            android:layout_marginBottom="10dp"/>
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_answerType"
             android:background="@drawable/rounded_corner"
-            android:minHeight="36dp"/>
+            android:minHeight="36dp"
+            android:layout_marginBottom="10dp"/>
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_answers"
+            android:background="@drawable/rounded_corner"
+            android:minHeight="36dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/editText_challenge_answer"
+            android:hint="Resposta esperada (opcional)"
+            android:padding="10dp"
+            android:inputType="text"
+            android:background="@drawable/rounded_corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/btn_create_new_challenge"

@@ -12,15 +12,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +30,9 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 import pt.ipleiria.knowestgbygame.Activities.ChallengeActivity;
+import pt.ipleiria.knowestgbygame.Helpers.Constant;
+import pt.ipleiria.knowestgbygame.Helpers.PermissionUtils;
 import pt.ipleiria.knowestgbygame.Models.AnswerType;
-import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.R;
 
 public class QrcodeFragment extends Fragment {
@@ -45,12 +44,12 @@ public class QrcodeFragment extends Fragment {
     private SurfaceHolder surfaceHolder;
     private TextView answer;
     private ChallengeActivity challengeActivity;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_answer_qrcode, container, false);
-
+        view = inflater.inflate(R.layout.fragment_answer_qrcode, container, false);
 
         cameraView = view.findViewById(R.id.cameraView);
         answer = view.findViewById(R.id.challenge_answer);
@@ -61,28 +60,43 @@ public class QrcodeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case Constant.CAMERA_PERMISSIONS_REQUEST:
+                if (PermissionUtils.permissionGranted(requestCode, Constant.CAMERA_PERMISSIONS_REQUEST, grantResults)) {
+                    startQRCodeScanner();
+                }
+                break;
+        }
+    }
 
 
     public void startQRCodeScanner(){
 
         //CHECK PERMISSION CAMERA
-        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST);
+        if (ContextCompat.checkSelfPermission(challengeActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(challengeActivity, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST);
         }
 
         cameraView.setZOrderMediaOverlay(true);
         surfaceHolder = cameraView.getHolder();
-        barcode = new BarcodeDetector.Builder(this.getContext())
-                .setBarcodeFormats(Barcode.QR_CODE)
-                .build();
+
+       barcode = new BarcodeDetector.Builder(challengeActivity.getApplicationContext())
+        .setBarcodeFormats(Barcode.QR_CODE)
+        .build();
+
+
 
         if (!barcode.isOperational()) {
             //analyse whats happens in this case
-            Toast.makeText(this.getContext(), "Não foi possível inicializar o Leitor de QRCode", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(challengeActivity, "Não foi possível inicializar o Leitor de QRCode", Toast.LENGTH_SHORT).show();
+            challengeActivity.finish();
         }
 
-        cameraSource = new CameraSource.Builder(this.getContext(), barcode)
+        cameraSource = new CameraSource.Builder(challengeActivity, barcode)
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedFps(24)
                 .setAutoFocusEnabled(true)
@@ -93,10 +107,10 @@ public class QrcodeFragment extends Fragment {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ContextCompat.checkSelfPermission(QrcodeFragment.this.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                    if (ContextCompat.checkSelfPermission(challengeActivity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
                         cameraSource.start(cameraView.getHolder());
                     }else {
-                        Toast.makeText(QrcodeFragment.this.getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(challengeActivity, "Permission Denied", Toast.LENGTH_SHORT).show();
                     }
                 }catch (IOException e) {
                     e.printStackTrace();
@@ -122,7 +136,6 @@ public class QrcodeFragment extends Fragment {
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
                 if (barcodes.size() > 0) {
                     answer.post(new Runnable() {
                         @Override
@@ -134,7 +147,7 @@ public class QrcodeFragment extends Fragment {
                             String text = barcodes.valueAt(0).displayValue;
                             answer.setText(text);
                             cameraSource.stop();
-                            challengeActivity.getAnswer(text, 0, AnswerType.QRCODE);
+                            challengeActivity.getAnswer(text);
                             //need validation of qrcode data, if data is valid, go to next challenge
 
                             //ChallengeActivity.nextChallenge();

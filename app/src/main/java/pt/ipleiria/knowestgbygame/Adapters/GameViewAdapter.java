@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.Models.Game;
 import pt.ipleiria.knowestgbygame.R;
 
@@ -61,6 +60,11 @@ public class GameViewAdapter extends RecyclerView.Adapter <GameViewAdapter.GameV
     @Override
     public int getItemCount() {
         return gamesList.size();
+    }
+
+    public void filterList(ArrayList<Game> filteredList){
+        gamesList = filteredList;
+        notifyDataSetChanged();
     }
 
 

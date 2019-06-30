@@ -10,13 +10,11 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import pt.ipleiria.knowestgbygame.Models.AnswerType;
-import pt.ipleiria.knowestgbygame.Models.Challenge;
-import pt.ipleiria.knowestgbygame.Models.Game;
 import pt.ipleiria.knowestgbygame.R;
 
 public class HelperMethods {
@@ -31,12 +29,16 @@ public class HelperMethods {
                 return AnswerType.QRCODE;
             case 4:
                 return AnswerType.OBJECTDETECTION;
+            case 5:
+                return AnswerType.LOGODETECTION;
+            case 6:
+                return AnswerType.FACEDETECTION;
+            case 7:
+                return AnswerType.FITRUN;
             default:
                 return AnswerType.TEXT;
         }
     }
-
-
 
     public static int getPositionByAnswerType(AnswerType type) {
         switch (type) {
@@ -48,11 +50,47 @@ public class HelperMethods {
                 return 3;
             case OBJECTDETECTION:
                 return 4;
+            case LOGODETECTION:
+                return 5;
+            case FACEDETECTION:
+                return 6;
+            case FITRUN:
+                return 7;
             default:
                 return 2;
         }
     }
 
+
+    public static String getAnswerOfPosition(int position) {
+        switch (position) {
+            case 1:
+                return "sorriso";
+            case 2:
+                return "raiva";
+            case 3:
+                return "labelSurprise";
+            case 4:
+                return "chapeu";
+            default:
+                return "";
+        }
+    }
+
+    public static int getPositionOfAnswers(String answer) {
+        switch (answer) {
+            case "sorriso":
+                return 1;
+            case "raiva":
+                return 2;
+            case "supresa":
+                return 3;
+            case "chapeu":
+                return 4;
+            default:
+                return 0;
+        }
+    }
 
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -110,6 +148,40 @@ public class HelperMethods {
     }
 
 
+    public static boolean verifyEmailAndName(EditText editTextEmail, EditText editTextName, Activity activity){
+        if (editTextName.getText().toString().isEmpty()) {
+            editTextName.setError(activity.getString(R.string.required_name));
+            editTextName.requestFocus();
+            return false;
+        }
+
+        if (editTextEmail.getText().toString().isEmpty()) {
+            editTextEmail.setError(activity.getString(R.string.required_email));
+            editTextEmail.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean verifyEmail(EditText editTextEmail, Activity activity){
+        if (editTextEmail.getText().toString().isEmpty()) {
+            editTextEmail.setError(activity.getString(R.string.required_email));
+            editTextEmail.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+
+    public static boolean verifyName(EditText editTextName, Activity activity){
+        if (editTextName.getText().toString().isEmpty()) {
+            editTextName.setError(activity.getString(R.string.required_name));
+            editTextName.requestFocus();
+            return false;
+        }
+        return true;
+    }
 
 
 

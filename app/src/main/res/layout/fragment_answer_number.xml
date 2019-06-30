@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="13sp"
-        android:inputType="number"
+        android:inputType="number|numberDecimal"
         android:layout_centerHorizontal="true"
         android:background="@drawable/rounded_corner"
         android:padding="15dp"/>

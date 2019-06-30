@@ -9,15 +9,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import java.util.ArrayList;
 
 import pt.ipleiria.knowestgbygame.Activities.AddGameActivity;
 import pt.ipleiria.knowestgbygame.Activities.DashboardActivity;
 import pt.ipleiria.knowestgbygame.Adapters.GameViewAdapter;
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
+import pt.ipleiria.knowestgbygame.Models.Challenge;
+import pt.ipleiria.knowestgbygame.Models.ChallengesManager;
+import pt.ipleiria.knowestgbygame.Models.Game;
 import pt.ipleiria.knowestgbygame.Models.GamesManager;
 import pt.ipleiria.knowestgbygame.R;
 
@@ -28,17 +36,49 @@ public class GameFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private View view;
     private DashboardActivity dashboardActivity;
+    private EditText editTextSearch;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_game, container, false);
+        editTextSearch = view.findViewById(R.id.editText_search);
+
         dashboardActivity = (DashboardActivity) getActivity();
         dashboardActivity.setTitle(R.string.game);
         setHasOptionsMenu(true);
         buildRecycleView();
 
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
         return view;
+    }
+
+
+    private void filter(String keyword){
+        ArrayList<Game> filteredLis = new ArrayList<>();
+
+        for (Game game: GamesManager.manager().getGames()) {
+            if (game.getTitle().toLowerCase().contains(keyword.toLowerCase())){
+                filteredLis.add(game);
+            }
+        }
+        adapter.filterList(filteredLis);
     }
 
 
@@ -84,15 +124,16 @@ public class GameFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add :
-            {
-//                Intent intent = new Intent(getActivity(), AddGameActivity.class);
-  //              startActivityForResult(intent, Constant.REQUEST_CODE);
+            case R.id.action_add: {
                 startAddChallengeActivity(-1);
                 return true;
             }
-            case R.id.action_search:
-            {
+            case R.id.action_search: {
+                if (editTextSearch.getVisibility() == View.VISIBLE ){
+                    editTextSearch.setVisibility(View.GONE);
+                } else {
+                    editTextSearch.setVisibility(View.VISIBLE);
+                }
                 //Write here what to do you on click
                 return true;
             }

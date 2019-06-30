@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ESTG Game</string>
+    <string name="already_registered">Error registering</string>
+    <string name="already_registered_message">Email already registered</string>
+    <string name="cancel">cancel</string>
+    <string name="challenge_title">Challenge</string>
+    <string name="challenges">Challenges</string>
+    <string name="classification">Classifitcation</string>
+    <string name="clear_all_label">Clear</string>
+    <string name="close">Close</string>
+    <string name="confirm">Confirm</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="delete_challenge_title">Delete Challenge</string>
+    <string name="delete_game_title">Delet Game</string>
+    <string name="description">Description</string>
+    <string name="description_foto">Select the \'Reply\' button to take a photo.</string>
+    <string name="dialog_select_camera">Camera</string>
+    <string name="dialog_select_gallery">Gallery</string>
+    <string name="dialog_select_prompt">Choose an Option</string>
+    <string name="edit">Edit</string>
+    <string name="edit_challenge">Edit Challenge</string>
+    <string name="edit_game">Edit Game</string>
+    <string name="estg_map">ESTG Map</string>
+    <string name="game">Games</string>
+    <string name="game_end">Game End</string>
+    <string name="game_title">Game Title</string>
+    <string name="games_played">Game Playeds</string>
+    <string name="image_picker_error">Something is wrong with this image. Please choose a different one.</string>
+    <string name="img_loaded">Image uploaded successfully!</string>
+    <string name="invalid_email">Please enter a valid email address</string>
+    <string name="invalid_password">Password must contain more than 6 characters</string>
+    <string name="loading_message">Loading image. Please wait</string>
+    <string name="message_delete_challenge">Are you sure you want to delete the challenge?</string>
+    <string name="message_delete_game">Are you sure you want to delete the game?</string>
+    <string name="my_account">MY account</string>
+    <string name="navigation_drawer_close">Hide navigation bar</string>
+    <string name="navigation_drawer_open">Show navigation bar</string>
+    <string name="new_challenge">Create New Challenge</string>
+    <string name="required_email">Email is required</string>
+    <string name="required_name">Name is required</string>
+    <string name="required_password">Password is required</string>
+    <string name="sugestion">Tip</string>
+    <string name="support">support</string>
+    <string name="user_updated">Profile Updated</string>
+</resources>

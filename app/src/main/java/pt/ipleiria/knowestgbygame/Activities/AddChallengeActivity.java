@@ -1,23 +1,17 @@
 package pt.ipleiria.knowestgbygame.Activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import pt.ipleiria.knowestgbygame.Helpers.Constant;
@@ -33,7 +27,7 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
     private EditText editTextTitle, editTextDesc, editTextTime, editTextScore, editTextSuggestion, editTextAnswer;
     private ImageView imageGame;
     private Challenge challenge;
-    private Spinner spinnerAnswerType;
+    private Spinner spinnerAnswerType, spinnerAnswers;
     private Button btn_create;
     private int position;
 
@@ -49,16 +43,20 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
         editTextAnswer = findViewById(R.id.editText_challenge_answer);
         editTextTime = findViewById(R.id.editText_challenge_time);
         editTextScore = findViewById(R.id.editText_challenge_points);
+
+
         imageGame = findViewById(R.id.img_challenge_thumbnail);
         btn_create = findViewById(R.id.btn_create_new_challenge);
 
         populateSpinner();
+        populateSpinnerAnswer();
+
 
         Intent i = getIntent();
         challenge = (Challenge) i.getSerializableExtra(Constant.CHALLENGE_TO_EDIT);
         position = i.getIntExtra(Constant.POSITION, -1);
 
-        if (challenge != null ) {
+        if  (challenge != null ) {
             btn_create.setText(getString(R.string.edit));
             this.setTitle(R.string.edit_challenge);
 
@@ -67,19 +65,26 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
             if (challenge.getSuggestion() != null){
                 editTextSuggestion.setText(challenge.getSuggestion());
             }
-            if (challenge.getAnswer() != null){
-                editTextAnswer.setText(challenge.getAnswer());
-            }
+
             if (challenge.getThumbnail() > 0) {
                 imageGame.setImageResource(challenge.getThumbnail());
             }
 
             spinnerAnswerType.setSelection(HelperMethods.getPositionByAnswerType(challenge.getAnswerType()));
-            editTextTime.setText(Long.toString(challenge.getTime()));
+            if (challenge.getAnswerType() == AnswerType.FACEDETECTION){
+                spinnerAnswers.setVisibility(View.VISIBLE);
+                editTextAnswer.setVisibility(View.GONE);
+                spinnerAnswers.setSelection(HelperMethods.getPositionOfAnswers(challenge.getAnswer()));
+
+            } else {
+                if (challenge.getAnswer() != null){
+                    editTextAnswer.setText(challenge.getAnswer());
+                }
+            }
+
+            double time = challenge.getTime()/60000.0;
+            editTextTime.setText(Double.toString(time));
             editTextScore.setText(Long.toString(challenge.getPoints()));
-
-            //imageGame.setText(challenge.getTitle());
-
         }
 
     }
@@ -92,8 +97,33 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
         spinnerAnswerType.setOnItemSelectedListener(this);
     }
 
+    public void populateSpinnerAnswer(){
+        spinnerAnswers = findViewById(R.id.spinner_answers);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.answers, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAnswers.setAdapter(adapter);
+        spinnerAnswers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (position == 6){
+            spinnerAnswers.setVisibility(View.VISIBLE);
+            editTextAnswer.setVisibility(View.GONE);
+        } else {
+            if (editTextAnswer.getVisibility() == view.GONE){
+                spinnerAnswers.setVisibility(View.GONE);
+                editTextAnswer.setVisibility(View.VISIBLE);
+            }
+        }
       }
 
     @Override
@@ -109,15 +139,59 @@ public class AddChallengeActivity extends AppCompatActivity implements AdapterVi
         //get data from form
         String title = editTextTitle.getText().toString();
         String description = editTextDesc.getText().toString();
-        long points = Long.parseLong(editTextScore.getText().toString());
-        long time = Long.parseLong(editTextTime.getText().toString());
-        String suggestion = editTextSuggestion.getText().toString();
-        String answer = editTextAnswer.getText().toString();
+
+        if (title.trim().isEmpty()) {
+            editTextTitle.setError("Título é obrigatório");
+            editTextTitle.requestFocus();
+            return;
+        }
+
+        if (editTextScore.getText().toString().isEmpty()) {
+            editTextScore.setError("Pontos é obrigatório");
+            editTextScore.requestFocus();
+            return;
+        }
+
+        if (editTextTime.getText().toString().isEmpty()) {
+            editTextTime.setError("Tempo é obrigatório");
+            editTextTime.requestFocus();
+            return;
+        }
+
+        if (description.trim().isEmpty()) {
+            editTextDesc.setError("Descrição é obrigatório");
+            editTextDesc.requestFocus();
+            return;
+        }
+
+
+        if (spinnerAnswerType.getSelectedItemPosition() == 0){
+            HelperMethods.showAlertInfo("Tipo de respota", "Deve indicar um tipo de resposta", this);
+            return;
+        }
+
+
         AnswerType answerType = HelperMethods.getCategory(spinnerAnswerType.getSelectedItemPosition());
+        String answer;
+        if (answerType == AnswerType.FACEDETECTION){
+            if (spinnerAnswers.getSelectedItemPosition() == 0){
+                HelperMethods.showAlertInfo("Resposta", "Deve indicar uma resposta", this);
+                return;
+            }
+
+            answer = HelperMethods.getAnswerOfPosition(spinnerAnswers.getSelectedItemPosition());
+        } else {
+            answer = editTextAnswer.getText().toString();
+        }
+
+        long points = Long.parseLong(editTextScore.getText().toString());
+        long time = ((long)Float.parseFloat(editTextTime.getText().toString()))*60000;
+        String suggestion = editTextSuggestion.getText().toString();
         int thumb =  R.drawable.ic_challenge;
 
         Intent returnIntent = new Intent();
         int pos = 0;
+
 
         if (challenge != null) {
             ChallengesManager.manager().getChallenges().get(position).setTitle(title);

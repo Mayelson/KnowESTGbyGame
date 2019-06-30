@@ -9,9 +9,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:id="@+id/img_profile"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,13 +20,16 @@
         android:paddingTop="8dp"
         android:text="UserName"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:id="@+id/textView_profile_name"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="email@user.com"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite"
+        android:id="@+id/textView_email_address"/>
 
 
 </LinearLayout>

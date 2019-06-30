@@ -1,5 +1,6 @@
 package pt.ipleiria.knowestgbygame.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import pt.ipleiria.knowestgbygame.Adapters.DashboardViewAdapter;
+import pt.ipleiria.knowestgbygame.Helpers.Constant;
 import pt.ipleiria.knowestgbygame.Helpers.HelperMethods;
 import pt.ipleiria.knowestgbygame.Models.Challenge;
 import pt.ipleiria.knowestgbygame.Models.Game;
@@ -24,14 +26,15 @@ public class DashboardFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private View view;
+    private DashboardViewAdapter myAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        buildRecycleView();
-        setHasOptionsMenu(true);
         getActivity().setTitle(R.string.app_name);
+        setHasOptionsMenu(true);
+        buildRecycleView();
 
         return view;
     }
@@ -45,9 +48,17 @@ public class DashboardFragment extends Fragment {
 
     public void buildRecycleView(){
         recyclerView = view.findViewById(R.id.recycleView_challenge);
-        DashboardViewAdapter myAdapter = new DashboardViewAdapter(this.getContext(), GamesManager.manager().getGames());
+        myAdapter = new DashboardViewAdapter(this.getContext(), GamesManager.manager().getGamesWithChallenges());
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         recyclerView.setAdapter(myAdapter);
 
+    }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        myAdapter.notifyDataSetChanged();
     }
 }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -108,28 +109,31 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                progressBar.setVisibility(View.GONE);
+
                 if (task.isSuccessful()) {
-                    //uploadImageToFirebaseStorage();
+
 
                     FirebaseUser user = mAuth.getCurrentUser();
 
-                    if (user != null) {
-                        UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(displayName)
-                               // .setPhotoUri(Uri.parse(profileImageUrl))
-                                .build();
-
-                        user.updateProfile(profile)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            finish();
-                                            startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
+                    if (user != null ) {
+                        if (uriProfileImage != null){
+                            uploadImageToFirebaseStorage(displayName);
+                        } else {
+                            UserProfileChangeRequest profile;
+                            profile = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(displayName)
+                                    .build();
+                            user.updateProfile(profile)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                goToDashBard();
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                        }
+
                     }
                 } else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
@@ -155,9 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
             uriProfileImage = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
-                imageViewProfile.setImageBitmap(bitmap);
-
-
+                imageViewProfile.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 100, 100, false));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -169,26 +171,50 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void uploadImageToFirebaseStorage() {
-        StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("profilepics/" + System.currentTimeMillis() + ".jpg");
+    private void uploadImageToFirebaseStorage(final String displayName) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference();
+            final StorageReference riversRef = storageRef.child("images/"+uriProfileImage.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(uriProfileImage);
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
 
-        if (uriProfileImage != null) {
-            progressBar.setVisibility(View.VISIBLE);
-            profileImageRef.putFile(uriProfileImage)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressBar.setVisibility(View.GONE);
-                            profileImageUrl = taskSnapshot.getDownloadUrl().toString();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+                    return riversRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        UserProfileChangeRequest profile;
+                        profile = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(displayName)
+                                .setPhotoUri(downloadUri)
+                                .build();
+                        mAuth.getCurrentUser().updateProfile(profile)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            goToDashBard();
+                                        }
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Falha ao efetuar o download da imagem de perfil", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+    }
+
+    public void goToDashBard(){
+        progressBar.setVisibility(View.GONE);
+        finish();
+        startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
     }
 }
