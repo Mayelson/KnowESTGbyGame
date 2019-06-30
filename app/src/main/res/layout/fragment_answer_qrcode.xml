@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/challenge_answer"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorBlueCustom"
+            android:background="@color/colorBlue"
             android:text="A scanear ..."
             android:textSize="13sp"
             android:gravity="center"

@@ -45,6 +45,10 @@
     <string name="invalid_password">Password deve conter mais de 6 caracteres</string>
     <string name="games_played">Jogos efetuados</string>
     <string name="user_updated">Perfil atualizado</string>
+    <string name="CreateDesafio">Criar Desafio</string>
+    <string name="TipsForDesafio">Dica para o desafio (opcional)</string>
+    <string name="ChooseImage">Escolher imagem</string>
+    <string name="addDesafio">Associar Desafios</string>
 
 
 </resources>

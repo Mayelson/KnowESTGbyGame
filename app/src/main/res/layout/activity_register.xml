@@ -22,7 +22,7 @@
             android:layout_marginBottom="30dp"
             android:text="Criar Conta"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorGray500"
             android:textSize="20sp"/>
 
         <ImageView
@@ -30,7 +30,7 @@
             android:layout_height="100dp"
             android:id="@+id/img_profile_register"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_insert"
+            android:src="@drawable/ic_add_image"
             android:onClick="btnPickImage" />
 
 
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Escolher imagem"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorGray500"
             android:layout_marginBottom="20dp"
             android:textAlignment="center"
             android:textSize="10sp"/>
@@ -51,6 +51,8 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_corner"
             android:hint="Nome"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:imeOptions="actionDone"
             android:inputType="textPersonName"
             android:padding="10dp"
@@ -61,6 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:background="@drawable/rounded_corner"
             android:hint="Email"
             android:imeOptions="actionDone"
@@ -77,6 +81,8 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_corner"
             android:hint="Password"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:padding="10dp"
@@ -89,8 +95,10 @@
             android:layout_height="35dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/rounded_btn"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:background="@color/colorBlue"
             android:onClick="btnRegister"
             android:text="Registar"
             android:textColor="@color/colorWhite" />
@@ -101,7 +109,7 @@
             android:layout_marginTop="30dp"
             android:text="Ja tem uma conta? Inicia sessão aqui"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorGray500"
             android:textSize="13sp"
             android:onClick="goToLogin"/>
 

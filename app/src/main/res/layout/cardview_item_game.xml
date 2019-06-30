@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/challenge_title"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorBlueCustom"
+            android:background="@color/colorBlue"
             android:textSize="13sp"
             android:gravity="center"
             android:layout_width="match_parent"

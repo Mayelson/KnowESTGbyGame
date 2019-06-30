@@ -15,18 +15,19 @@
         android:orientation="vertical">
 
         <ImageView
+            android:layout_marginTop="80px"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:id="@+id/img_challenge_thumbnail"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_insert"
+            android:src="@drawable/ic_add_image"
             android:onClick="btnPickImage"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Escolher imagem"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorGray500"
             android:layout_marginBottom="20dp"
             android:textAlignment="center"
             android:textSize="10sp"/>
@@ -38,8 +39,10 @@
             android:inputType="text"
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
+            android:layout_marginRight="50px"
+            android:layout_marginLeft="50px"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:imeOptions="actionDone"
             android:layout_marginBottom="10dp"/>
 
@@ -51,7 +54,9 @@
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:imeOptions="actionDone"
             android:layout_marginBottom="10dp"/>
 
@@ -59,11 +64,13 @@
             android:id="@+id/editText_challenge_time"
             android:hint="Tempo em segundos (1min = 60seg)"
             android:padding="10dp"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:inputType="numberDecimal"
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:imeOptions="actionDone"
             android:layout_marginBottom="10dp"/>
 
@@ -76,15 +83,19 @@
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:imeOptions="actionDone"
             android:layout_marginBottom="10dp"
             android:lines="3"/>
 
         <EditText
             android:id="@+id/editText_challenge_sugestion"
-            android:hint="Dica para o desafio (opcional)"
+            android:hint="@string/TipsForDesafio"
             android:padding="10dp"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:gravity="top"
             android:inputType="textMultiLine"
             android:background="@drawable/rounded_corner"
@@ -100,6 +111,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_answerType"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:background="@drawable/rounded_corner"
             android:minHeight="36dp"
             android:layout_marginBottom="10dp"/>
@@ -118,19 +131,23 @@
             android:hint="Resposta esperada (opcional)"
             android:padding="10dp"
             android:inputType="text"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:background="@drawable/rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/btn_create_new_challenge"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:background="@drawable/rounded_btn"
             android:layout_centerHorizontal="true"
-            android:text="Criar Desafio"
+            android:text="@string/CreateDesafio"
             android:textColor="@color/colorWhite"
             android:layout_gravity="center_horizontal"
             android:onClick="btnNewChallenge"

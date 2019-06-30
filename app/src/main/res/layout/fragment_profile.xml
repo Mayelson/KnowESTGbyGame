@@ -27,7 +27,7 @@
             android:background="@drawable/circle"
             android:padding="3dp"
             android:scaleType="centerInside"
-            android:src="@drawable/profile_pic"
+            android:src="@drawable/ic_avatar"
             android:id="@+id/img_profile"/>
 
     </RelativeLayout>
@@ -41,7 +41,7 @@
         android:layout_marginTop="15sp"
         android:fontFamily="sans-serif-light"
         android:text="Perfil Name"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorGray500"
         android:textSize="32sp" />
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif"
         android:text="Email address"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorGray500"
         android:textSize="14sp" />
 
 

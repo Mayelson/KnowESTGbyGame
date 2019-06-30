@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@color/colorBlueCustom"
+    android:background="@color/colorBlue"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@mipmap/ic_launcher_round"
+        android:layout_width="180px"
+        android:layout_height="180px"
+        android:layout_marginLeft="50px"
+        android:src="@drawable/ic_avatar"
         android:id="@+id/img_profile"/>
 
     <TextView
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="UserName"
+        android:layout_marginLeft="50px"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorWhite"
         android:id="@+id/textView_profile_name"/>
@@ -28,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="email@user.com"
+        android:layout_marginLeft="50px"
         android:textColor="@color/colorWhite"
         android:id="@+id/textView_email_address"/>
 
